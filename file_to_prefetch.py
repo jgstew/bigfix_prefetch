@@ -21,7 +21,10 @@ def file_to_prefetch(file_path, url="http://unknown"):
     else:
         return "Error: file does not exist or is not readable! " + file_path
 
-    return "TODO: all the things. file:" + file_path + " url:" + url + " chunksize:" + str(chunksize)
+    return "PLACEHOLDER:: file:" + file_path + " url:" + url + \
+                " chunksize:" + str(chunksize)
+    # return ( "prefetch %s sha1:%s size:%d %s sha256:%s" % \
+    #       (filename, hashes[0].hexdigest(), size, url, hashes[1].hexdigest()) )
 
 
 def main(file_path="LICENSE"):
