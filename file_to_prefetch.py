@@ -14,7 +14,7 @@ from hashlib import sha1, sha256
 def file_to_prefetch(file_path, url="http://unknown"):
     """Return the bigfix prefetch generated from the provided file"""
     hashes = sha1(), sha256()
-    chunk_size = max(4*1024, max(h.block_size for h in hashes))
+    chunk_size = max(4*1024, max(each_hash.block_size for each_hash in hashes))
     file_size = 0
     file_name = os.path.basename(file_path)
 
@@ -28,8 +28,8 @@ def file_to_prefetch(file_path, url="http://unknown"):
                 break
             # NOTE: This is probably not needed, could read directly from filesystem
             file_size += len(chunk)
-            for h in hashes:
-                h.update(chunk)
+            for each_hash in hashes:
+                each_hash.update(chunk)
 
 
     #print("Debug_Info:: file:" + file_path + " url:" + url + \
