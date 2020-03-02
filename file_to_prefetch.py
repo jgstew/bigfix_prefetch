@@ -5,13 +5,23 @@
 #  - https://github.com/jgstew/tools/blob/master/Python/url_to_prefetch.py
 #  - https://bigfix.me/relevance/details/3022868
 
-#import os
-#from hashlib import sha1, sha256
+from __future__ import absolute_import
+
+import os
+from hashlib import sha1, sha256
 
 
 def file_to_prefetch(file_path, url="http://unknown"):
     """Return the bigfix prefetch generated from the provided file"""
-    return "TODO: all the things. file:" + file_path + " url:" + url
+    hashes = sha1(), sha256()
+    chunksize = max(4*1024, max(h.block_size for h in hashes))
+
+    if os.path.isfile(file_path) and os.access(file_path, os.R_OK):
+        print("file exists! " + file_path)
+    else:
+        return "Error: file does not exist or is not readable! " + file_path
+
+    return "TODO: all the things. file:" + file_path + " url:" + url + " chunksize:" + str(chunksize)
 
 
 def main(file_path="LICENSE"):
