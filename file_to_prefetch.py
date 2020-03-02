@@ -16,12 +16,11 @@ def file_to_prefetch(file_path, url="http://unknown"):
     hashes = sha1(), sha256()
     chunk_size = max(4*1024, max(h.block_size for h in hashes))
     file_size = 0
+    file_name = os.path.basename(file_path)
 
-    if os.path.isfile(file_path) and os.access(file_path, os.R_OK):
-        print("Debug_Info:: file exists! " + file_path)
-    else:
+    if not(os.path.isfile(file_path) and os.access(file_path, os.R_OK)):
         return "Error: file does not exist or is not readable! " + file_path
-    
+
     with open(file_path, 'rb') as file_object:
         while True:
             chunk = file_object.read(chunk_size)
@@ -33,10 +32,10 @@ def file_to_prefetch(file_path, url="http://unknown"):
                 h.update(chunk)
 
 
-    print("Debug_Info:: file:" + file_path + " url:" + url + \
-                " chunksize:" + str(chunk_size))
-    return ( "prefetch %s sha1:%s size:%d %s sha256:%s" % \
-                (file_path, hashes[0].hexdigest(), file_size, url, hashes[1].hexdigest()) )
+    #print("Debug_Info:: file:" + file_path + " url:" + url + \
+    #            " chunksize:" + str(chunk_size))
+    return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
+                (file_name, hashes[0].hexdigest(), file_size, url, hashes[1].hexdigest())
 
 
 def main(file_path="LICENSE"):
