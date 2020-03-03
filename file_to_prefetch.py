@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This script takes a file path and optionally a URL and generates
+"""This script takes a file path, optionally a URL, and generates
  a bigfix prefetch statement."""
 # Related:
 #  - https://github.com/jgstew/tools/blob/master/Python/url_to_prefetch.py
