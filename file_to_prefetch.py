@@ -17,7 +17,9 @@ def file_to_prefetch(file_path, url="http://unknown"):
     hashes = sha1(), sha256()
     chunk_size = max(4*1024, max(each_hash.block_size for each_hash in hashes))
     file_size = 0
-    file_name = os.path.basename(file_path)
+    # changing spaces in file name to underscores due to prefetch issues without it
+    #  alternatively, could download as sha1 and rename after
+    file_name = os.path.basename(file_path).replace(' ', '_')
 
     if not(os.path.isfile(file_path) and os.access(file_path, os.R_OK)):
         return "Error: file does not exist or is not readable! " + file_path
@@ -31,7 +33,6 @@ def file_to_prefetch(file_path, url="http://unknown"):
             file_size += len(chunk)
             for each_hash in hashes:
                 each_hash.update(chunk)
-
 
     #print("Debug_Info:: file:" + file_path + " url:" + url + \
     #            " chunksize:" + str(chunk_size))
