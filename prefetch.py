@@ -14,14 +14,29 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 
 import parse_prefech
 
-def prefetch(prefetch_data):
+def prefetch(prefetch_data, save_file=True):
     """actually prefetch the file and validate the file and prefetch data"""
     parsed_prefetch = {}
+    file_path = ""
+
     if 'file_size' in prefetch_data:
         parsed_prefetch = prefetch_data
     else:
         parsed_prefetch = parse_prefech.parse_prefetch(prefetch_data)
     # NOTE: do the download & validation (url_to_prefetch)
+    
+    # if file_path doesn't exist, then use file_name and current directory
+    #  if file doesn't exist, then download file there
+    #  then validate it against prefetch data
+    
+    if 'file_path' in parsed_prefetch:
+        file_path = parsed_prefetch['file_path']
+    else:
+        file_path = parsed_prefetch['file_name']
+
+    if save_file:
+        print(file_path)
+
     return parsed_prefetch
 
 def main():
