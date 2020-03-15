@@ -3,7 +3,7 @@
 
 from __future__ import absolute_import
 
-#import re
+import re
 
 def parse_prefetch(prefetch):
     """parse bigfix prefetch using regex"""
@@ -17,6 +17,15 @@ def parse_prefetch(prefetch):
         # get sha1:  / sha1:(\w{40}) /
         # get sha256:  / sha256:(\w{64})/
         # get url:  / (\S+://\S+)/
+        parsed_prefetch['file_name'] = re.search(r'prefetch (\S+) ', prefetch).group(1)
+        parsed_prefetch['size'] = re.search(r' size:(\d+) ', prefetch).group(1)
+        parsed_prefetch['sha1'] = re.search(r' sha1:(\w{40}) ', prefetch).group(1)
+        parsed_prefetch['url'] = re.search(r' (\S+://\S+)', prefetch).group(1)
+        try:
+            # NOTE: sha256 is technically optional, though now "mandatory" for some configs
+            parsed_prefetch['sha256'] = re.search(r' sha256:(\w{64})', prefetch).group(1)
+        except AttributeError:
+            pass
     if "size=" in prefetch:
         print("- prefetch block:")
         # get file name:  / name=(\S+)/
@@ -24,7 +33,17 @@ def parse_prefetch(prefetch):
         # get sha1:  / sha1=(\w{40})/
         # get sha256:  / sha256=(\w{64})/
         # get url:  / url=(\S+://\S+)/
-    return parsed_prefetch['raw_prefech']
+        parsed_prefetch['file_name'] = re.search(r' name=(\S+)', prefetch).group(1)
+        parsed_prefetch['size'] = re.search(r' size=(\d+)', prefetch).group(1)
+        parsed_prefetch['sha1'] = re.search(r' sha1=(\w{40})', prefetch).group(1)
+        parsed_prefetch['url'] = re.search(r' url=(\S+://\S+)', prefetch).group(1)
+        try:
+            # NOTE: sha256 is technically optional, though now "mandatory" for some configs
+            parsed_prefetch['sha256'] = re.search(r' sha256=(\w{64})', prefetch).group(1)
+        except AttributeError:
+            pass
+
+    return parsed_prefetch
 
 def main(prefetch="add prefetch item name=LGPO.zip sha1=0c74dac83aed569607aaa6df152206c709eef769 \
 size=815660 url=https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip \
