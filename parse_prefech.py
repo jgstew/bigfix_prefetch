@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-"""This script takes a bigfix prefetch and parses it into a hash dictionary"""
+"""This script takes a bigfix prefetch and parses it into a hash dictionary
+
+This is the opposite of https://github.com/jgstew/generate_bes_from_template/blob/master/action_prefetch_from_template.py
+"""
 
 from __future__ import absolute_import
 
@@ -11,35 +14,35 @@ def parse_prefetch(prefetch):
     parsed_prefetch['raw_prefech'] = prefetch
 
     if "size:" in prefetch:
-        print("- prefetch statement:")
+        ##print("- prefetch statement:")
         # get file name:  /prefetch (\S+) /
         # get size:  / size:(\d+) /
         # get sha1:  / sha1:(\w{40}) /
         # get sha256:  / sha256:(\w{64})/
         # get url:  / (\S+://\S+)/
         parsed_prefetch['file_name'] = re.search(r'prefetch (\S+) ', prefetch).group(1)
-        parsed_prefetch['size'] = re.search(r' size:(\d+) ', prefetch).group(1)
-        parsed_prefetch['sha1'] = re.search(r' sha1:(\w{40}) ', prefetch).group(1)
-        parsed_prefetch['url'] = re.search(r' (\S+://\S+)', prefetch).group(1)
+        parsed_prefetch['file_size'] = re.search(r' size:(\d+) ', prefetch).group(1)
+        parsed_prefetch['file_sha1'] = re.search(r' sha1:(\w{40}) ', prefetch).group(1)
+        parsed_prefetch['download_url'] = re.search(r' (\S+://\S+)', prefetch).group(1)
         try:
             # NOTE: sha256 is technically optional, though now "mandatory" for some configs
-            parsed_prefetch['sha256'] = re.search(r' sha256:(\w{64})', prefetch).group(1)
+            parsed_prefetch['file_sha256'] = re.search(r' sha256:(\w{64})', prefetch).group(1)
         except AttributeError:
             pass
     if "size=" in prefetch:
-        print("- prefetch block:")
+        ##print("- prefetch block:")
         # get file name:  / name=(\S+)/
         # get size:  / size=(\d+)/
         # get sha1:  / sha1=(\w{40})/
         # get sha256:  / sha256=(\w{64})/
         # get url:  / url=(\S+://\S+)/
         parsed_prefetch['file_name'] = re.search(r' name=(\S+)', prefetch).group(1)
-        parsed_prefetch['size'] = re.search(r' size=(\d+)', prefetch).group(1)
-        parsed_prefetch['sha1'] = re.search(r' sha1=(\w{40})', prefetch).group(1)
-        parsed_prefetch['url'] = re.search(r' url=(\S+://\S+)', prefetch).group(1)
+        parsed_prefetch['file_size'] = re.search(r' size=(\d+)', prefetch).group(1)
+        parsed_prefetch['file_sha1'] = re.search(r' sha1=(\w{40})', prefetch).group(1)
+        parsed_prefetch['download_url'] = re.search(r' url=(\S+://\S+)', prefetch).group(1)
         try:
             # NOTE: sha256 is technically optional, though now "mandatory" for some configs
-            parsed_prefetch['sha256'] = re.search(r' sha256=(\w{64})', prefetch).group(1)
+            parsed_prefetch['file_sha256'] = re.search(r' sha256=(\w{64})', prefetch).group(1)
         except AttributeError:
             pass
 
