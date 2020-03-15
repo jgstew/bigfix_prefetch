@@ -14,13 +14,14 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 
 import parse_prefech
 
-def prefetch(prefetch):
+def prefetch(prefetch_data):
+    """actually prefetch the file and validate the file and prefetch data"""
     parsed_prefetch = {}
-    if 'file_size' in prefetch:
-        parsed_prefetch = prefetch
+    if 'file_size' in prefetch_data:
+        parsed_prefetch = prefetch_data
     else:
-        parsed_prefetch = parse_prefech.parse_prefetch(prefetch)
-    # TODO: do the download & validation (url_to_prefetch)
+        parsed_prefetch = parse_prefech.parse_prefetch(prefetch_data)
+    # NOTE: do the download & validation (url_to_prefetch)
     return parsed_prefetch
 
 def main():
@@ -34,9 +35,10 @@ size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe"))
                 'file_name': 'LGPO.zip',
                 'file_size': '815660',
                 'file_sha1': '0c74dac83aed569607aaa6df152206c709eef769',
-                'download_url': 'https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip',
+                'download_url': \
+'https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip',
                 'file_sha256': '6ffb6416366652993c992280e29faea3507b5b5aa661c33ba1af31f48acea9c4'
-            }
+                }
     print(prefetch(parsed_prefetch))
 
 
