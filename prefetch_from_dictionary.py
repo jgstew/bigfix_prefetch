@@ -7,6 +7,7 @@ This is the opposite of parse_prefech.py
 from __future__ import absolute_import
 
 def prefetch_from_dictionary(prefetch_dictionary, prefetch_type=None):
+    """Turn Python Dictionary into BigFix Prefetch String"""
     if not prefetch_type:
         if 'prefetch_type' in prefetch_dictionary:
             prefetch_type = prefetch_dictionary['prefetch_type']
@@ -21,7 +22,7 @@ def prefetch_from_dictionary(prefetch_dictionary, prefetch_type=None):
 def main():
     """Only called if this script is run directly"""
     prefetch_dictionary = {
-                'file_name': 'LGPO.zip',
+                'file_name': 'LGPO_1.zip',
                 'file_size': '815660',
                 'file_sha1': '0c74dac83aed569607aaa6df152206c709eef769',
                 'download_url': \

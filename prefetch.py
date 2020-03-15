@@ -24,11 +24,11 @@ def prefetch(prefetch_data, save_file=True):
     else:
         parsed_prefetch = parse_prefech.parse_prefetch(prefetch_data)
     # NOTE: do the download & validation (url_to_prefetch)
-    
+
     # if file_path doesn't exist, then use file_name and current directory
     #  if file doesn't exist, then download file there
     #  then validate it against prefetch data
-    
+
     if 'file_path' in parsed_prefetch:
         file_path = parsed_prefetch['file_path']
     else:
