@@ -12,13 +12,18 @@ def parse_prefetch(prefetch):
 
     if "size:" in prefetch:
         print("- prefetch statement:")
-        # get file name:  /prefetch (\S)+ /
-        # get size:  / size:(\d)+ /
-        # get sha1:  / sha1:(\w)+ /
-        # get sha256:  / sha256:(\w)+/
+        # get file name:  /prefetch (\S+) /
+        # get size:  / size:(\d+) /
+        # get sha1:  / sha1:(\w+) /
+        # get sha256:  / sha256:(\w{64})/
         # get url:  / (\S+://\S+)/
     if "size=" in prefetch:
         print("- prefetch block:")
+        # get file name:  / name=(\S+)/
+        # get size:  / size=(\d+)/
+        # get sha1:  / sha1=(\w)+/
+        # get sha256:  / sha256=(\w{64})/
+        # get url:  / url=(\S+://\S+)/
     return parsed_prefetch['raw_prefech']
 
 def main(prefetch="add prefetch item name=LGPO.zip sha1=0c74dac83aed569607aaa6df152206c709eef769 \
