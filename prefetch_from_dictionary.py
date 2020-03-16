@@ -27,21 +27,21 @@ def prefetch_from_dictionary(prefetch_dictionary, prefetch_type=None):
     if prefetch_type == 'block':
         #print(FORMAT_PREFETCH_BLOCK_ITEM)
         prefetch_output = FORMAT_PREFETCH_BLOCK_ITEM.format(
-                file_name = prefetch_dictionary['file_name'],
-                file_sha1 = prefetch_dictionary['file_sha1'],
-                file_size = prefetch_dictionary['file_size'],
-                download_url = prefetch_dictionary['download_url']
-                )
+            file_name=prefetch_dictionary['file_name'],
+            file_sha1=prefetch_dictionary['file_sha1'],
+            file_size=prefetch_dictionary['file_size'],
+            download_url=prefetch_dictionary['download_url']
+            )
         if 'file_sha256' in prefetch_dictionary:
             prefetch_output += " sha256=" + prefetch_dictionary['file_sha256']
     else:
         #print(FORMAT_PREFETCH_STATEMENT)
         prefetch_output = FORMAT_PREFETCH_STATEMENT.format(
-                file_name = prefetch_dictionary['file_name'],
-                file_sha1 = prefetch_dictionary['file_sha1'],
-                file_size = prefetch_dictionary['file_size'],
-                download_url = prefetch_dictionary['download_url']
-                )
+            file_name=prefetch_dictionary['file_name'],
+            file_sha1=prefetch_dictionary['file_sha1'],
+            file_size=prefetch_dictionary['file_size'],
+            download_url=prefetch_dictionary['download_url']
+            )
         if 'file_sha256' in prefetch_dictionary:
             prefetch_output += " sha256:" + prefetch_dictionary['file_sha256']
 
