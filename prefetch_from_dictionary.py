@@ -23,7 +23,7 @@ def prefetch_from_dictionary(prefetch_dictionary, prefetch_type=None):
     # prefetch_type must be either `block` or `statement`
     print(prefetch_type)
 
-    if 'block' == prefetch_type:
+    if prefetch_type == 'block':
         print(FORMAT_PREFETCH_BLOCK_ITEM)
     else:
         print(FORMAT_PREFETCH_STATEMENT)
