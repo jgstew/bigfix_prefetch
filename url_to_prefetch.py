@@ -1,7 +1,10 @@
-#  function url_to_prefetch(url) takes
-#    Input a URL of a file
-#      downloads the file at the URL, and
-#    Outputs a BigFix Prefetch statement.
+#!/usr/bin/env python
+"""
+function url_to_prefetch(url) takes
+    Input a URL of a file
+        downloads the file at the URL, and
+    Outputs a BigFix Prefetch statement.
+"""
 
 ##  Example Results:
 # Docker: docker run python:2 bash -c "wget https://raw.githubusercontent.com/jgstew/tools/master/url_to_prefetch.py ;python url_to_prefetch.py"
@@ -29,7 +32,7 @@ def url_to_prefetch(url):
     # chunksize seems like it could be anything
     #   it is probably best if it is a multiple of a typical hash block_size
     #   a larger chunksize is probably best for faster downloads
-    chunksize = max(384000, max(h.block_size for h in hashes))
+    chunksize = max(384000, max(a_hash.block_size for a_hash in hashes))
     size = 0
 
     # NOTE: handle other cases, ensure default name if none set
@@ -42,8 +45,8 @@ def url_to_prefetch(url):
         if not chunk:
             break
         size += len(chunk)
-        for h in hashes:
-            h.update(chunk)
+        for a_hash in hashes:
+            a_hash.update(chunk)
 
     # https://www.learnpython.org/en/String_Formatting
     return "prefetch %s sha1:%s size:%d %s sha256:%s" % (filename, hashes[0].hexdigest(), size, url, hashes[1].hexdigest())
