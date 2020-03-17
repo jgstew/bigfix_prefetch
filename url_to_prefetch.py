@@ -6,11 +6,6 @@ function url_to_prefetch(url) takes
     Outputs a BigFix Prefetch statement.
 """
 
-##  Example Results:
-# Docker: docker run python:2 bash -c "wget https://raw.githubusercontent.com/jgstew/tools/master/url_to_prefetch.py ;python url_to_prefetch.py"
-#  Input: http://download.windowsupdate.com/d/msdownload/update/software/secu/2016/07/windows10.0-kb3172729-x64_18df742fad6bebc01e617c2d4f92e0d325e5138f.msu
-# Output: prefetch testfile sha1:18df742fad6bebc01e617c2d4f92e0d325e5138f size:199259 http://download.windowsupdate.com/d/msdownload/update/software/secu/2016/07/windows10.0-kb3172729-x64_18df742fad6bebc01e617c2d4f92e0d325e5138f.msu sha256:f5b55d436056a905e755984d457bac67295ad3e11531a6c33f3812cfb63ce010
-
 # NOTE: Consider adding options to cache the file downloads & log/cache the prefetches generated
 
 import posixpath
@@ -39,7 +34,8 @@ def url_to_prefetch(url):
     filename = posixpath.basename(url)
 
     response = urlopen(url)
-    # NOTE: Get Header If Present for Download Estimate:  int(req.info().getheader('Content-Length').strip())
+    # NOTE: Get Header If Present for Download Estimate:
+    #               int(req.info().getheader('Content-Length').strip())
     while True:
         chunk = response.read(chunksize)
         if not chunk:
@@ -58,12 +54,8 @@ if __name__ == '__main__':
 
 
 # References:
-#  - https://stackoverflow.com/questions/537542/how-can-i-create-multiple-hashes-of-a-file-using-only-one-pass
-#  - https://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
-#  - https://stackoverflow.com/questions/16694907/how-to-download-large-file-in-python-with-requests-py
-#  - https://gist.github.com/Zireael-N/ed36997fd1a967d78cb2
-#  - https://blog.sourcerer.io/full-guide-to-developing-rest-apis-with-aws-api-gateway-and-aws-lambda-d254729d6992
-#  - https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html
+# https://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
+# https://gist.github.com/Zireael-N/ed36997fd1a967d78cb2
 
 #  AWS Lambda
 #from url_to_prefetch import url_to_prefetch
