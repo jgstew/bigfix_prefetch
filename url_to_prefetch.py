@@ -45,13 +45,13 @@ def url_to_prefetch(url):
             a_hash.update(chunk)
 
     # https://www.learnpython.org/en/String_Formatting
-    return "prefetch %s sha1:%s size:%d %s sha256:%s" % (filename, hashes[0].hexdigest(), size, url, hashes[1].hexdigest())
+    return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
+                (filename, hashes[0].hexdigest(), size, url, hashes[1].hexdigest())
 
 
 # if called directly, then run this example:
 if __name__ == '__main__':
     main()
-
 
 # References:
 # https://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
