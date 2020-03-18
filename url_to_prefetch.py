@@ -16,6 +16,7 @@ try:
 except ImportError:
     from urllib2 import urlopen # Python 2
 
+from prefetch_from_dictionary import prefetch_from_dictionary
 
 def main():
     """Only called if this script is run directly"""
@@ -23,6 +24,7 @@ def main():
 
 def url_to_prefetch(url):
     """stream down file from url and calculate size & hashes, output BigFix prefetch"""
+    prefetch_dictionary = {}
     hashes = sha1(), sha256()
     # chunksize seems like it could be anything
     #   it is probably best if it is a multiple of a typical hash block_size
@@ -44,9 +46,17 @@ def url_to_prefetch(url):
         for a_hash in hashes:
             a_hash.update(chunk)
 
+    prefetch_dictionary['file_name'] = filename
+    prefetch_dictionary['file_size'] = size
+    prefetch_dictionary['file_sha1'] = hashes[0].hexdigest()
+    prefetch_dictionary['file_sha256'] = hashes[1].hexdigest()
+    prefetch_dictionary['download_url'] = url
+
+    return prefetch_from_dictionary(prefetch_dictionary)
+
     # https://www.learnpython.org/en/String_Formatting
-    return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
-                (filename, hashes[0].hexdigest(), size, url, hashes[1].hexdigest())
+    #return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
+    #            (filename, hashes[0].hexdigest(), size, url, hashes[1].hexdigest())
 
 
 # if called directly, then run this example:
