@@ -2,6 +2,9 @@
 """This script takes a python dictionary and formats it into a bigfix prefetch
 
 This is the opposite of parse_prefech.py
+
+Related:
+- https://github.com/jgstew/generate_bes_from_template/blob/master/action_prefetch_from_template.py
 """
 
 from __future__ import absolute_import
