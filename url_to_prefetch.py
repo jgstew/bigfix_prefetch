@@ -20,7 +20,11 @@ from prefetch_from_dictionary import prefetch_from_dictionary
 
 def main():
     """Only called if this script is run directly"""
-    print(url_to_prefetch("http://software.bigfix.com/download/redist/unzip-5.52.exe"))
+    import sys
+    if len(sys.argv) > 1:
+        print(url_to_prefetch(sys.argv[1]))
+    else:
+        print(url_to_prefetch("https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip"))
 
 def url_to_prefetch(url):
     """stream down file from url and calculate size & hashes, output BigFix prefetch"""
