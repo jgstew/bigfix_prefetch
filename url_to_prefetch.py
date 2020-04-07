@@ -24,7 +24,7 @@ def main():
         print(url_to_prefetch(sys.argv[1]))
     else:
         print(url_to_prefetch(
-            "https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip"
+            "https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip" # pylint: disable=line-too-long
             ))
 
 def url_to_prefetch(url):
