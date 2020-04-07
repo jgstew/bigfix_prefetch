@@ -20,11 +20,12 @@ from prefetch_from_dictionary import prefetch_from_dictionary
 
 def main():
     """Only called if this script is run directly"""
-    import sys
-    if len(sys.argv) > 1:
+    if len(sys.argv) == 2:
         print(url_to_prefetch(sys.argv[1]))
     else:
-        print(url_to_prefetch("https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip"))
+        print(url_to_prefetch(
+"https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip"
+            ))
 
 def url_to_prefetch(url):
     """stream down file from url and calculate size & hashes, output BigFix prefetch"""
@@ -65,6 +66,7 @@ def url_to_prefetch(url):
 
 # if called directly, then run this example:
 if __name__ == '__main__':
+    import sys
     main()
 
 # References:
