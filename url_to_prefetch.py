@@ -25,9 +25,10 @@ def main():
     else:
         print(url_to_prefetch(
             "https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip" # pylint: disable=line-too-long
+            #, True
             ))
 
-def url_to_prefetch(url):
+def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     """stream down file from url and calculate size & hashes, output BigFix prefetch"""
     prefetch_dictionary = {}
     hashes = sha1(), sha256()
@@ -57,7 +58,10 @@ def url_to_prefetch(url):
     prefetch_dictionary['file_sha256'] = hashes[1].hexdigest()
     prefetch_dictionary['download_url'] = url
 
-    return prefetch_from_dictionary(prefetch_dictionary)
+    if bool_return_dictionary:
+        return prefetch_dictionary
+    else:
+        return prefetch_from_dictionary(prefetch_dictionary)
 
     # https://www.learnpython.org/en/String_Formatting
     #return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
