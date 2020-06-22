@@ -12,7 +12,7 @@ import re
 def parse_prefetch(prefetch):
     """parse bigfix prefetch using regex"""
     parsed_prefetch = {}
-    parsed_prefetch['raw_prefech'] = prefetch
+    parsed_prefetch['raw_prefetch'] = prefetch
 
     if "size:" in prefetch:
         ##print("- prefetch statement:")

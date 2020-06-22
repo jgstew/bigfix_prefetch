@@ -12,7 +12,7 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 # Related:
 #  - https://github.com/jgstew/tools/blob/master/Python/url_to_prefetch.py
 
-import parse_prefech
+import parse_prefetch
 
 def prefetch(prefetch_data, save_file=True):
     """actually prefetch the file and validate the file and prefetch data"""
@@ -22,7 +22,7 @@ def prefetch(prefetch_data, save_file=True):
     if 'file_size' in prefetch_data:
         parsed_prefetch = prefetch_data
     else:
-        parsed_prefetch = parse_prefech.parse_prefetch(prefetch_data)
+        parsed_prefetch = parse_prefetch.parse_prefetch(prefetch_data)
     # NOTE: do the download & validation (url_to_prefetch)
 
     # if file_path doesn't exist, then use file_name and current directory
@@ -37,7 +37,9 @@ def prefetch(prefetch_data, save_file=True):
     if save_file:
         print(file_path)
 
+    # TODO: regenerate the prefetch, then compare.
     return parsed_prefetch
+
 
 def main():
     """Only called if this script is run directly"""
