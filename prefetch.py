@@ -19,7 +19,7 @@ import prefetches_have_matching_hashes
 def prefetch(prefetch_data, save_file=True):
     """actually prefetch the file and validate the file and prefetch data"""
     parsed_prefetch = {}
-    file_path = ""
+    file_path = None
 
     if 'file_size' in prefetch_data:
         parsed_prefetch = prefetch_data
@@ -31,17 +31,15 @@ def prefetch(prefetch_data, save_file=True):
     #  if file doesn't exist, then download file there
     #  then validate it against prefetch data
 
-    if 'file_path' in parsed_prefetch:
-        file_path = parsed_prefetch['file_path']
-    else:
-        file_path = parsed_prefetch['file_name']
-
     if save_file:
+        if 'file_path' in parsed_prefetch:
+            file_path = parsed_prefetch['file_path']
+        else:
+            file_path = parsed_prefetch['file_name']
         print(file_path)
-        # NOTE: need to save the file!!!
 
     # regenerate the prefetch, then compare.
-    test_prefetch = url_to_prefetch.url_to_prefetch( parsed_prefetch['download_url'], save_file, file_path )
+    test_prefetch = url_to_prefetch.url_to_prefetch( parsed_prefetch['download_url'], True, file_path )
 
     print(test_prefetch)
     print(parsed_prefetch)

@@ -24,7 +24,7 @@ def main():
         print(url_to_prefetch(sys.argv[1]))
     else:
         print(url_to_prefetch(
-            "https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip" # pylint: disable=line-too-long
+            "http://software.bigfix.com/download/redist/unzip-5.52.exe" # pylint: disable=line-too-long
             #, True, "LGPO.zip"
             ))
 
@@ -48,6 +48,7 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
         if not os.path.exists(file_save_path):
             file_save = open(file_save_path, 'wb')
         else:
+            # consider deleting the file?
             print("WARNING: file already exists")
 
 
