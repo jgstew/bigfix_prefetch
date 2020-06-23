@@ -41,7 +41,10 @@ def prefetch(prefetch_data, save_file=True):
         # NOTE: need to save the file!!!
 
     # regenerate the prefetch, then compare.
-    test_prefetch = url_to_prefetch.url_to_prefetch( parsed_prefetch['download_url'] )
+    test_prefetch = url_to_prefetch.url_to_prefetch( parsed_prefetch['download_url'], save_file, file_path )
+
+    print(test_prefetch)
+    print(parsed_prefetch)
 
     return prefetches_have_matching_hashes.prefetches_have_matching_hashes( parsed_prefetch, test_prefetch )
 

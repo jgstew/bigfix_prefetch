@@ -18,10 +18,19 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
         print("invalid prefetch")
         return False
 
-    if parsed_prefetch_one['file_size'] == parsed_prefetch_two['file_size']:
-        if parsed_prefetch_one['file_sha1'] == parsed_prefetch_two['file_sha1']:
-            # NOTE: need to also check sha256 if present
-            return True
+    try:
+        # file_size could be an int or a string, force convertion to int for comparison. 
+        if int(parsed_prefetch_one['file_size']) == int(parsed_prefetch_two['file_size']):
+            if parsed_prefetch_one['file_sha1'] == parsed_prefetch_two['file_sha1']:
+                # NOTE: need to also check sha256 if present
+                return True
+            else:
+                print("ERROR: file_sha1 doesn't match")
+        else:
+            print("ERROR: file_size doesn't match")
+    except ValueError:
+        print("ERROR: Invalid file_size")
+        return False
 
     return False
 

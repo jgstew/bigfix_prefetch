@@ -25,7 +25,7 @@ def main():
     else:
         print(url_to_prefetch(
             "https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip" # pylint: disable=line-too-long
-            #, True
+            #, True, "LGPO.zip"
             ))
 
 def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
@@ -40,7 +40,18 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
 
     # NOTE: handle other cases, ensure default name if none set
     filename = posixpath.basename(url)
+    file_save = None
 
+    if file_save_path:
+        # check if file already exists
+        import os.path
+        if not os.path.exists(file_save_path):
+            file_save = open(file_save_path, 'wb')
+        else:
+            print("WARNING: file already exists")
+
+
+    # start download process:
     response = urlopen(url)
     # NOTE: Get Header If Present for Download Estimate:
     #               int(req.info().getheader('Content-Length').strip())
@@ -48,9 +59,18 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
         chunk = response.read(chunksize)
         if not chunk:
             break
+        # get size of chunk and add to existing size
         size += len(chunk)
+        # add chunk to hash computations
         for a_hash in hashes:
             a_hash.update(chunk)
+        # save file if handler
+        if file_save:
+            file_save.write(chunk)
+
+    # close file handler if used
+    if file_save:
+        file_save.close()
 
     prefetch_dictionary['file_name'] = filename
     prefetch_dictionary['file_size'] = size
