@@ -60,7 +60,7 @@ def main():
             'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
             'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
             }
-    print( prefetch( prefetch_dictionary_one ) )
+    print( prefetch( prefetch_dictionary_one , False ) )
 
 
 # if called directly, then run this example:
