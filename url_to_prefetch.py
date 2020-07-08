@@ -9,7 +9,7 @@ function url_to_prefetch(url) takes
 # NOTE: Consider adding options to cache the file downloads & log/cache the prefetches generated
 
 import posixpath
-from hashlib import sha1, sha256
+from hashlib import sha1, sha256, md5
 
 try:
     from urllib.request import urlopen # Python 3
@@ -25,13 +25,16 @@ def main():
     else:
         print(url_to_prefetch(
             "http://software.bigfix.com/download/redist/unzip-5.52.exe" # pylint: disable=line-too-long
-            #, True, "LGPO.zip"
+            , True
+            ))
+        print(url_to_prefetch(
+            "http://software.bigfix.com/download/redist/unzip-5.52.exe" # pylint: disable=line-too-long
             ))
 
 def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     """stream down file from url and calculate size & hashes, output BigFix prefetch"""
     prefetch_dictionary = {}
-    hashes = sha1(), sha256()
+    hashes = sha1(), sha256(), md5()
     # chunksize seems like it could be anything
     #   it is probably best if it is a multiple of a typical hash block_size
     #   a larger chunksize is probably best for faster downloads
@@ -77,6 +80,7 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     prefetch_dictionary['file_size'] = size
     prefetch_dictionary['file_sha1'] = hashes[0].hexdigest()
     prefetch_dictionary['file_sha256'] = hashes[1].hexdigest()
+    prefetch_dictionary['file_md5'] = hashes[2].hexdigest()
     prefetch_dictionary['download_url'] = url
 
     if bool_return_dictionary:
