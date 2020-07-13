@@ -7,7 +7,7 @@ Related:
 - https://github.com/jgstew/generate_bes_from_template/blob/master/action_prefetch_from_template.py
 """
 
-from __future__ import absolute_import
+#from __future__ import absolute_import
 
 FORMAT_PREFETCH_STATEMENT = "prefetch {file_name} sha1:{file_sha1} \
 size:{file_size} {download_url}"

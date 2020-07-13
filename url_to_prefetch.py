@@ -16,7 +16,11 @@ try:
 except ImportError:
     from urllib2 import urlopen # Python 2
 
-from prefetch_from_dictionary import prefetch_from_dictionary
+# this is needed due to using this in another module
+try:
+    from prefetch_from_dictionary import *
+except ModuleNotFoundError:
+    pass
 
 def main():
     """Only called if this script is run directly"""
