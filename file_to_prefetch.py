@@ -34,7 +34,7 @@ def file_to_prefetch(file_path, url="http://unknown"):
             for each_hash in hashes:
                 each_hash.update(chunk)
 
-    #print("Debug_Info:: file:" + file_path + " url:" + url + \
+    # print("Debug_Info:: file:" + file_path + " url:" + url + \
     #            " chunksize:" + str(chunk_size))
     # NOTE: this should probably return a hash so that the format can be handled elsewhere.
     return "prefetch %s sha1:%s size:%d %s sha256:%s" % \

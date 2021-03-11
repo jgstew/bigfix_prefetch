@@ -15,7 +15,7 @@ def parse_prefetch(prefetch):
     parsed_prefetch['raw_prefetch'] = prefetch
 
     if "size:" in prefetch:
-        ##print("- prefetch statement:")
+        # print("- prefetch statement:")
         # get file name:  /prefetch (\S+) /
         # get size:  / size:(\d+) /
         # get sha1:  / sha1:(\w{40}) /
@@ -32,7 +32,7 @@ def parse_prefetch(prefetch):
         except AttributeError:
             pass
     if "size=" in prefetch:
-        ##print("- prefetch block:")
+        # print("- prefetch block:")
         # get file name:  / name=(\S+)/
         # get size:  / size=(\d+)/
         # get sha1:  / sha1=(\w{40})/

@@ -49,11 +49,11 @@ def prefetch(prefetch_data, save_file=True):
 
 def main():
     """Only called if this script is run directly"""
-    #print(prefetch("add prefetch item name=LGPO.zip sha1=0c74dac83aed569607aaa6df152206c709eef769 \
-#size=815660 url=https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip \
-#sha256=6ffb6416366652993c992280e29faea3507b5b5aa661c33ba1af31f48acea9c4"))
-    #print(prefetch("prefetch unzip.exe sha1:e1652b058195db3f5f754b7ab430652ae04a50b8 \
-#size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe"))
+    # print(prefetch("add prefetch item name=LGPO.zip sha1=0c74dac83aed569607aaa6df152206c709eef769 \
+    # size=815660 url=https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/LGPO.zip \
+    # sha256=6ffb6416366652993c992280e29faea3507b5b5aa661c33ba1af31f48acea9c4"))
+    # print(prefetch("prefetch unzip.exe sha1:e1652b058195db3f5f754b7ab430652ae04a50b8 \
+    # size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe"))
     prefetch_dictionary_one = {
             'file_name': 'unzip.exe',
             'file_size': '167936',
