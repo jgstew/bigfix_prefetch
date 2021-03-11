@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+"""
+This script takes 2 prefetch dictionaries and validates they match
+"""
 
 import parse_prefetch
 
@@ -15,9 +19,17 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
         parsed_prefetch_two = parse_prefetch.parse_prefetch(prefetch_two)
 
     # ensure both prefetches have the required details
-    if not ( ( parsed_prefetch_one.keys() >= {"file_size", "file_sha1"} ) and ( parsed_prefetch_two.keys() >= {"file_size", "file_sha1"} ) ):
+    if not (
+            (parsed_prefetch_one.keys() >= {"file_size", "file_sha1"})
+            and
+            (parsed_prefetch_two.keys() >= {"file_size", "file_sha1"})
+    ):
         print("invalid prefetch")
-        if ( ( parsed_prefetch_one.keys() >= {"file_size", "file_md5"} ) and ( parsed_prefetch_two.keys() >= {"file_size", "file_md5"} ) ):
+        if (
+                (parsed_prefetch_one.keys() >= {"file_size", "file_md5"})
+                and
+                (parsed_prefetch_two.keys() >= {"file_size", "file_md5"})
+        ):
             print("Both Have MD5 - Is this for comparison?")
         return False
 
@@ -25,7 +37,11 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
         # file_size could be an int or a string, force convertion to int for comparison.
         if int(parsed_prefetch_one['file_size']) == int(parsed_prefetch_two['file_size']):
             if parsed_prefetch_one['file_sha1'] == parsed_prefetch_two['file_sha1']:
-                if ( ( parsed_prefetch_one.keys() >= {"file_sha256"} ) and ( parsed_prefetch_two.keys() >= {"file_sha256"} ) ):
+                if (
+                        (parsed_prefetch_one.keys() >= {"file_sha256"})
+                        and
+                        (parsed_prefetch_two.keys() >= {"file_sha256"})
+                ):
                 # NOTE: need to also check sha256 if present
                     if parsed_prefetch_one['file_sha256'] == parsed_prefetch_two['file_sha256']:
                         return True
@@ -56,7 +72,9 @@ def main():
         'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a',
         'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
     }
-    print( prefetches_have_matching_hashes(prefetch_dictionary_one, prefetch_dictionary_one) )
+    print(
+        prefetches_have_matching_hashes(prefetch_dictionary_one, prefetch_dictionary_one)
+    )
 
 
 # if called directly, then run this example:
