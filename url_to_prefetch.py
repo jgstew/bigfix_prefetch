@@ -8,6 +8,8 @@ function url_to_prefetch(url) takes
 
 # NOTE: Consider adding options to cache the file downloads & log/cache the prefetches generated
 
+import sys
+import os.path
 import posixpath
 from hashlib import sha1, sha256, md5
 
@@ -16,11 +18,14 @@ try:
 except ImportError:
     from urllib2 import urlopen # Python 2
 
-# this is needed due to using this in another module
-try:
-    from prefetch_from_dictionary import *
-except ModuleNotFoundError:
-    pass
+
+import site
+
+
+# add path this script is in
+site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+
+import prefetch_from_dictionary
 
 def main():
     """Only called if this script is run directly"""
@@ -51,7 +56,6 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
 
     if file_save_path:
         # check if file already exists
-        import os.path
         if not os.path.exists(file_save_path):
             file_save = open(file_save_path, 'wb')
         else:
@@ -90,7 +94,7 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     if bool_return_dictionary:
         return prefetch_dictionary
     else:
-        return prefetch_from_dictionary(prefetch_dictionary)
+        return prefetch_from_dictionary.prefetch_from_dictionary(prefetch_dictionary)
 
     # https://www.learnpython.org/en/String_Formatting
     #return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
@@ -99,7 +103,6 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
 
 # if called directly, then run this example:
 if __name__ == '__main__':
-    import sys
     main()
 
 # References:
