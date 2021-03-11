@@ -1,6 +1,7 @@
 
 import parse_prefetch
 
+
 def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
     """Compare the file size and hashes to make sure they match"""
     if 'file_size' in prefetch_one:
@@ -21,7 +22,7 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
         return False
 
     try:
-        # file_size could be an int or a string, force convertion to int for comparison. 
+        # file_size could be an int or a string, force convertion to int for comparison.
         if int(parsed_prefetch_one['file_size']) == int(parsed_prefetch_two['file_size']):
             if parsed_prefetch_one['file_sha1'] == parsed_prefetch_two['file_sha1']:
                 if ( ( parsed_prefetch_one.keys() >= {"file_sha256"} ) and ( parsed_prefetch_two.keys() >= {"file_sha256"} ) ):
@@ -49,12 +50,14 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
 def main():
     """Only called if this script is run directly"""
     prefetch_dictionary_one = {
-                'file_name': 'unzip.exe',
-                'file_size': '167936',
-                'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
-                'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
-                }
+        'file_name': 'unzip.exe',
+        'file_size': '167936',
+        'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
+        'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a',
+        'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
+    }
     print( prefetches_have_matching_hashes(prefetch_dictionary_one, prefetch_dictionary_one) )
+
 
 # if called directly, then run this example:
 if __name__ == '__main__':
