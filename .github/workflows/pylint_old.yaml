@@ -1,5 +1,5 @@
 ---
-name: pylint
+name: pylint_old
 
 on:
   push:
