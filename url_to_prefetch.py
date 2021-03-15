@@ -5,7 +5,6 @@ function url_to_prefetch(url) takes
         downloads the file at the URL, and
     Outputs a BigFix Prefetch statement.
 """
-
 # NOTE: Consider adding options to cache the file downloads & log/cache the prefetches generated
 
 import sys
@@ -25,7 +24,8 @@ import site
 # add path this script is in
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 
-import prefetch_from_dictionary
+import prefetch_from_dictionary  # pylint: disable=wrong-import-position
+
 
 def main():
     """Only called if this script is run directly"""
@@ -33,11 +33,11 @@ def main():
         print(url_to_prefetch(sys.argv[1]))
     else:
         print(url_to_prefetch(
-            "http://software.bigfix.com/download/redist/unzip-5.52.exe" # pylint: disable=line-too-long
+            "http://software.bigfix.com/download/redist/unzip-5.52.exe"  # pylint: disable=line-too-long
             , True
             ))
         print(url_to_prefetch(
-            "http://software.bigfix.com/download/redist/unzip-5.52.exe" # pylint: disable=line-too-long
+            "http://software.bigfix.com/download/redist/unzip-5.52.exe"  # pylint: disable=line-too-long
             ))
 
 def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
@@ -93,8 +93,7 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
 
     if bool_return_dictionary:
         return prefetch_dictionary
-    else:
-        return prefetch_from_dictionary.prefetch_from_dictionary(prefetch_dictionary)
+    return prefetch_from_dictionary.prefetch_from_dictionary(prefetch_dictionary)
 
     # https://www.learnpython.org/en/String_Formatting
     #return "prefetch %s sha1:%s size:%d %s sha256:%s" % \

@@ -6,7 +6,7 @@ This script takes 2 prefetch statements, blocks, or dictionaries and validates t
 import parse_prefetch
 
 
-def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
+def prefetches_have_matching_hashes(prefetch_one, prefetch_two):  # pylint: disable=too-many-branches
     """Compare the file size and hashes to make sure they match"""
     if 'file_size' in prefetch_one:
         parsed_prefetch_one = prefetch_one
@@ -43,7 +43,7 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
                         ("file_sha256" in parsed_prefetch_two)
                 ):
                 # NOTE: need to also check sha256 if present
-                    if parsed_prefetch_one['file_sha256'] == parsed_prefetch_two['file_sha256']:
+                    if parsed_prefetch_one['file_sha256'] == parsed_prefetch_two['file_sha256']:  # pylint: disable=no-else-return
                         return True
                     else:
                         print("ERROR: file_sha256 doesn't match")
