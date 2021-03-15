@@ -20,13 +20,13 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):  # pylint: disa
 
     # ensure both prefetches have the required details
     if not (
-            ("file_size" in parsed_prefetch_one and "file_sha1" in parsed_prefetch_one) and
-            ("file_size" in parsed_prefetch_two and "file_sha1" in parsed_prefetch_two)
+            ("file_size" in parsed_prefetch_one and "file_sha1" in parsed_prefetch_one)
+            and ("file_size" in parsed_prefetch_two and "file_sha1" in parsed_prefetch_two)
     ):
         print("invalid prefetch")
         if (
-                ("file_size" in parsed_prefetch_one and "file_md5" in parsed_prefetch_one) and
-                ("file_size" in parsed_prefetch_two and "file_md5" in parsed_prefetch_two)
+                ("file_size" in parsed_prefetch_one and "file_md5" in parsed_prefetch_one)
+                and ("file_size" in parsed_prefetch_two and "file_md5" in parsed_prefetch_two)
         ):
             print("Both Have MD5 - Is this for comparison?")
         return False
@@ -37,8 +37,7 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):  # pylint: disa
             if parsed_prefetch_one['file_sha1'] == parsed_prefetch_two['file_sha1']:
                 if (
                         ("file_sha256" in parsed_prefetch_one)
-                        and
-                        ("file_sha256" in parsed_prefetch_two)
+                        and ("file_sha256" in parsed_prefetch_two)
                 ):
                     # NOTE: need to also check sha256 if present
                     if parsed_prefetch_one['file_sha256'] == parsed_prefetch_two['file_sha256']:  # pylint: disable=no-else-return

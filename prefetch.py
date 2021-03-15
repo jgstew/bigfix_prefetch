@@ -22,6 +22,7 @@ import parse_prefetch  # pylint: disable=import-error,wrong-import-position
 import url_to_prefetch  # pylint: disable=import-error,wrong-import-position
 import prefetches_have_matching_hashes  # pylint: disable=import-error,wrong-import-position
 
+
 def prefetch(prefetch_data, save_file=True):
     """actually prefetch the file and validate the file and prefetch data"""
     parsed_prefetch = {}
