@@ -15,7 +15,7 @@ def file_to_prefetch(file_path, url="http://unknown"):
     """Return the bigfix prefetch generated from the provided file. URL optional.
     This function only reads the file once but computes both hashes using chunks."""
     hashes = sha1(), sha256()
-    chunk_size = max(4*1024, max(each_hash.block_size for each_hash in hashes))
+    chunk_size = max(4 * 1024, max(each_hash.block_size for each_hash in hashes))
     file_size = 0
     # changing spaces in file name to underscores due to prefetch issues without it
     #  alternatively, could download as sha1 and rename after
@@ -44,6 +44,7 @@ def file_to_prefetch(file_path, url="http://unknown"):
 def main(file_path="LICENSE"):
     """Only called if this script is run directly"""
     print(file_to_prefetch(file_path))
+
 
 # if called directly, then run this example:
 if __name__ == '__main__':

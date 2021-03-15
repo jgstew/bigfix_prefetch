@@ -13,9 +13,9 @@ import posixpath
 from hashlib import sha1, sha256, md5
 
 try:
-    from urllib.request import urlopen # Python 3
+    from urllib.request import urlopen  # Python 3
 except ImportError:
-    from urllib2 import urlopen # Python 2
+    from urllib2 import urlopen  # Python 2
 
 
 import site
@@ -35,10 +35,11 @@ def main():
         print(url_to_prefetch(
             "http://software.bigfix.com/download/redist/unzip-5.52.exe"  # pylint: disable=line-too-long
             , True
-            ))
+        ))
         print(url_to_prefetch(
             "http://software.bigfix.com/download/redist/unzip-5.52.exe"  # pylint: disable=line-too-long
-            ))
+        ))
+
 
 def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     """stream down file from url and calculate size & hashes, output BigFix prefetch"""
@@ -61,7 +62,6 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
         else:
             # consider deleting the file?
             print("WARNING: file already exists")
-
 
     # start download process:
     response = urlopen(url)
