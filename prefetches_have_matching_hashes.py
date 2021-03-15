@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-This script takes 2 prefetch dictionaries and validates they match
+This script takes 2 prefetch statements, blocks, or dictionaries and validates they match
 """
 
 import parse_prefetch
@@ -20,15 +20,15 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
 
     # ensure both prefetches have the required details
     if not (
-            (parsed_prefetch_one.keys() >= {"file_size", "file_sha1"})
+            ("file_size" in parsed_prefetch_one and "file_sha1" in parsed_prefetch_one)
             and
-            (parsed_prefetch_two.keys() >= {"file_size", "file_sha1"})
+            ("file_size" in parsed_prefetch_two and "file_sha1" in parsed_prefetch_two)
     ):
         print("invalid prefetch")
         if (
-                (parsed_prefetch_one.keys() >= {"file_size", "file_md5"})
+                ("file_size" in parsed_prefetch_one and "file_md5" in parsed_prefetch_one)
                 and
-                (parsed_prefetch_two.keys() >= {"file_size", "file_md5"})
+                ("file_size" in parsed_prefetch_two and "file_md5" in parsed_prefetch_two)
         ):
             print("Both Have MD5 - Is this for comparison?")
         return False
@@ -38,9 +38,9 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):
         if int(parsed_prefetch_one['file_size']) == int(parsed_prefetch_two['file_size']):
             if parsed_prefetch_one['file_sha1'] == parsed_prefetch_two['file_sha1']:
                 if (
-                        (parsed_prefetch_one.keys() >= {"file_sha256"})
+                        ("file_sha256" in parsed_prefetch_one)
                         and
-                        (parsed_prefetch_two.keys() >= {"file_sha256"})
+                        ("file_sha256" in parsed_prefetch_two)
                 ):
                 # NOTE: need to also check sha256 if present
                     if parsed_prefetch_one['file_sha256'] == parsed_prefetch_two['file_sha256']:
