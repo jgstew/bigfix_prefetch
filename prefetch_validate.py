@@ -26,13 +26,49 @@ def validate_prefetch(bigfix_prefetch, sha256_required=False):
     # if prefetch_one is not a dictionary, then parse it into one
     if 'file_size' in bigfix_prefetch:
         parsed_bigfix_prefetch = bigfix_prefetch
+        if not 'raw_prefetch' in parsed_bigfix_prefetch:
+            # adding a raw_prefetch value for later warnings
+            parsed_bigfix_prefetch['raw_prefetch'] = "NOTE: source was a prefetch dictionary already"
     else:
-        parsed_bigfix_prefetch = parse_prefetch.parse_prefetch(bigfix_prefetch)
-    
-    if not int(parsed_bigfix_prefetch['file_size']) > 0:
-        warnings.warn("size is invalid")
+        try:
+            parsed_bigfix_prefetch = parse_prefetch.parse_prefetch(bigfix_prefetch)
+        except AttributeError:
+            warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + bigfix_prefetch)
+            return False
+
+    # if file_sha1 is present, it must be exactly 40 characters
+    if 'file_sha1' in parsed_bigfix_prefetch and len(parsed_bigfix_prefetch['file_sha1']) != 40:
+        warnings.warn("ERROR: sha1 not the correct length(40)")
         return False
-    
+
+    # if files_sha256 is present, it must be exactly 64 characters
+    if 'file_sha256' in parsed_bigfix_prefetch and len(parsed_bigfix_prefetch['file_sha256']) != 64:
+        warnings.warn("ERROR: sha256 not the correct length(64)")
+        return False
+
+    # file size must be >= 0
+    if int(parsed_bigfix_prefetch['file_size']) <= 0:
+        warnings.warn("ERROR: prefetch size is invalid\n" + parsed_bigfix_prefetch['raw_prefetch'])
+        return False
+
+    # if sha256 is required but missing, then invalid
+    if not 'file_sha256' in parsed_bigfix_prefetch:
+        if not sha256_required:
+            warnings.warn("INFO: sha256 is recommended, but missing. Please add it for future requirements.")
+        else:
+            warnings.warn("ERROR: sha256 is missing but required\n" + parsed_bigfix_prefetch['raw_prefetch'])
+            return False
+
+    # if a prefetch statement, then sha1 MUST be present
+    if 'prefetch_type' in parsed_bigfix_prefetch and parsed_bigfix_prefetch['prefetch_type'] == 'statement':
+        print("Info: prefetech statement")
+        if not 'file_sha1' in parsed_bigfix_prefetch:
+            warnings.warn("ERROR: sha1 is mandatory in prefetch statement but missing")
+            return False
+
+    # future: validate the characters within the hash strings [a-fA-F0-9]
+    # future: validate the characters within the name and URL
+
     return True
 
 
@@ -48,6 +84,7 @@ def main():
     print(validate_prefetch(prefetch_dictionary_valid))
     print(validate_prefetch("add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe"))
     print(validate_prefetch("add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=0 url=http://software.bigfix.com/download/redist/unzip-5.52.exe"))
+    print(validate_prefetch("add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=ABC url=http://software.bigfix.com/download/redist/unzip-5.52.exe"))
 
 
 # if called directly, then run this example:

@@ -17,7 +17,7 @@ BigFix Prefetch Comparison:
 If enhanced security is a requirement, then SHA256 warnings become exceptions
 """
 
-import warnings
+# import warnings
 
 import parse_prefetch
 
