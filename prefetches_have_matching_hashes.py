@@ -1,18 +1,37 @@
 #!/usr/bin/env python
 """
 This script takes 2 prefetch statements, blocks, or dictionaries and validates they match
+
+BigFix Prefetches:
+    - Must have size
+    - Must have sha1 if prefetch statement, always expected (optional-warn-missing)
+    - Must have sha256 to work with enhanced security (optional-warn-missing)
+    - MD5 is never used, only provided for use with IOCs or similar weak validation
+
+BigFix Prefetch Comparison:
+    - Must have matching size
+    - Must have at least one hash in common (sha1 or sha256)
+    - All common hashes must match
+    - SHA256 must be present and matching for enhanced security (optional-warn-missing)
+
+If enhanced security is a requirement, then SHA256 warnings become exceptions
 """
+
+import warnings
 
 import parse_prefetch
 
 
 def prefetches_have_matching_hashes(prefetch_one, prefetch_two):  # pylint: disable=too-many-branches
     """Compare the file size and hashes to make sure they match"""
+
+    # if prefetch_one is not a dictionary, then parse it into one
     if 'file_size' in prefetch_one:
         parsed_prefetch_one = prefetch_one
     else:
         parsed_prefetch_one = parse_prefetch.parse_prefetch(prefetch_one)
 
+    # if prefetch_two is not a dictionary, then parse it into one
     if 'file_size' in prefetch_two:
         parsed_prefetch_two = prefetch_two
     else:
