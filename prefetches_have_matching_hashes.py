@@ -13,7 +13,7 @@ If enhanced security is a requirement, then SHA256 warnings become exceptions
 
 import warnings
 
-import parse_prefetch
+import prefetch_parse
 import prefetch_validate
 
 
@@ -36,13 +36,13 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
     if 'file_size' in prefetch_one:
         parsed_prefetch_one = prefetch_one
     else:
-        parsed_prefetch_one = parse_prefetch.parse_prefetch(prefetch_one)
+        parsed_prefetch_one = prefetch_parse.parse_prefetch(prefetch_one)
 
     # if prefetch_two is not a dictionary, then parse it into one
     if 'file_size' in prefetch_two:
         parsed_prefetch_two = prefetch_two
     else:
-        parsed_prefetch_two = parse_prefetch.parse_prefetch(prefetch_two)
+        parsed_prefetch_two = prefetch_parse.parse_prefetch(prefetch_two)
 
     # Validate that file_size matches
     try:

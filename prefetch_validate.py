@@ -18,7 +18,7 @@ MD5 is never used, only provided for use with IOCs or similar weak validation
 
 import warnings
 
-import parse_prefetch
+import prefetch_parse
 
 
 def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disable=too-many-return-statements
@@ -32,7 +32,7 @@ def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disabl
                 source was a prefetch dictionary already"
     else:
         try:
-            parsed_bigfix_prefetch = parse_prefetch.parse_prefetch(bigfix_prefetch)
+            parsed_bigfix_prefetch = prefetch_parse.parse_prefetch(bigfix_prefetch)
         except AttributeError:
             warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + bigfix_prefetch)
             return False

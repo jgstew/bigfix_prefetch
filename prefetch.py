@@ -18,7 +18,7 @@ import os.path
 # add path this script is in
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 
-import parse_prefetch  # pylint: disable=import-error,wrong-import-position
+import prefetch_parse  # pylint: disable=import-error,wrong-import-position
 import url_to_prefetch  # pylint: disable=import-error,wrong-import-position
 import prefetches_have_matching_hashes  # pylint: disable=import-error,wrong-import-position
 
@@ -31,7 +31,7 @@ def prefetch(prefetch_data, save_file=True):
     if 'file_size' in prefetch_data:
         parsed_prefetch = prefetch_data
     else:
-        parsed_prefetch = parse_prefetch.parse_prefetch(prefetch_data)
+        parsed_prefetch = prefetch_parse.parse_prefetch(prefetch_data)
     # NOTE: do the download & validation (url_to_prefetch)
 
     # if file_path doesn't exist, then use file_name and current directory
