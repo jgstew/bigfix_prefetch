@@ -19,7 +19,7 @@ import os.path
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 
 import prefetch_parse  # pylint: disable=import-error,wrong-import-position
-import url_to_prefetch  # pylint: disable=import-error,wrong-import-position
+import prefetch_from_url  # pylint: disable=import-error,wrong-import-position
 import prefetches_have_matching_hashes  # pylint: disable=import-error,wrong-import-position
 
 
@@ -46,7 +46,7 @@ def prefetch(prefetch_data, save_file=True):
         print(file_path)
 
     # regenerate the prefetch, then compare.
-    test_prefetch = url_to_prefetch.url_to_prefetch(
+    test_prefetch = prefetch_from_url.url_to_prefetch(
         parsed_prefetch['download_url'],
         True,
         file_path
