@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 """
-This script takes 2 prefetch statements, blocks, or dictionaries and validates they match
-
-BigFix Prefetches:
-    - Must have size
-    - Must have sha1 if prefetch statement, always expected (optional-warn-missing)
-    - Must have sha256 to work with enhanced security (optional-warn-missing)
-    - MD5 is never used, only provided for use with IOCs or similar weak validation
+This script takes 2 prefetch statements, blocks, or dictionaries and validates they "match"
 
 BigFix Prefetch Comparison:
     - Must have matching size
@@ -17,13 +11,26 @@ BigFix Prefetch Comparison:
 If enhanced security is a requirement, then SHA256 warnings become exceptions
 """
 
-# import warnings
+import warnings
 
 import parse_prefetch
+import prefetch_validate
 
 
-def prefetches_have_matching_hashes(prefetch_one, prefetch_two):  # pylint: disable=too-many-branches
+def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=False):  # pylint: disable=too-many-branches,too-many-return-statements
     """Compare the file size and hashes to make sure they match"""
+    hash_comparison_pass = {
+        "sha256": None,
+        "sha1": None,
+    }
+
+    # ensure both prefetches have the required details
+    if not (
+            prefetch_validate.validate_prefetch(prefetch_one)
+            and prefetch_validate.validate_prefetch(prefetch_two)
+    ):
+        warnings.warn("ERROR: one or more prefetches are invalid")
+        return False
 
     # if prefetch_one is not a dictionary, then parse it into one
     if 'file_size' in prefetch_one:
@@ -37,43 +44,51 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two):  # pylint: disa
     else:
         parsed_prefetch_two = parse_prefetch.parse_prefetch(prefetch_two)
 
-    # ensure both prefetches have the required details
-    if not (
-            ("file_size" in parsed_prefetch_one and "file_sha1" in parsed_prefetch_one)
-            and ("file_size" in parsed_prefetch_two and "file_sha1" in parsed_prefetch_two)
-    ):
-        print("invalid prefetch")
-        if (
-                ("file_size" in parsed_prefetch_one and "file_md5" in parsed_prefetch_one)
-                and ("file_size" in parsed_prefetch_two and "file_md5" in parsed_prefetch_two)
-        ):
-            print("Both Have MD5 - Is this for comparison?")
+    # Validate that file_size matches
+    try:
+        if int(parsed_prefetch_one['file_size']) != int(parsed_prefetch_two['file_size']):
+            warnings.warn("ERROR: file_size does not match")
+            return False
+    except ValueError:
+        warnings.warn("ERROR: Invalid file_size")
         return False
 
-    try:
-        # file_size could be an int or a string, force convertion to int for comparison.
-        if int(parsed_prefetch_one['file_size']) == int(parsed_prefetch_two['file_size']):
-            if parsed_prefetch_one['file_sha1'] == parsed_prefetch_two['file_sha1']:
-                if (
-                        ("file_sha256" in parsed_prefetch_one)
-                        and ("file_sha256" in parsed_prefetch_two)
-                ):
-                    # NOTE: need to also check sha256 if present
-                    if parsed_prefetch_one['file_sha256'] == parsed_prefetch_two['file_sha256']:  # pylint: disable=no-else-return
-                        return True
-                    else:
-                        print("ERROR: file_sha256 doesn't match")
-                        return False
-                else:
-                    print("Warning: file_sha256 is missing but size and sha1 match")
-                    return True
-            else:
-                print("ERROR: file_sha1 doesn't match")
+    # check if file_sha256 is present
+    if (
+            ("file_sha256" in parsed_prefetch_one)
+            and ("file_sha256" in parsed_prefetch_two)
+    ):
+        # check if file_sha256 matches
+        if parsed_prefetch_one['file_sha256'] != parsed_prefetch_two['file_sha256']:  # pylint: disable=no-else-return
+            warnings.warn("ERROR: file_sha256 does not match")
+            return False
         else:
-            print("ERROR: file_size doesn't match")
-    except ValueError:
-        print("ERROR: Invalid file_size")
-        return False
+            hash_comparison_pass["sha256"] = True
+    else:
+        # sha256 is not present, check if required:
+        if sha256_required:
+            warnings.warn("ERROR: file_sha256 does not match")
+            return False
+
+    # check if file_sha1 is present
+    if (
+            ("file_sha1" in parsed_prefetch_one)
+            and ("file_sha1" in parsed_prefetch_two)
+    ):
+        # check file_sha1 matches
+        if parsed_prefetch_one['file_sha1'] != parsed_prefetch_two['file_sha1']:  # pylint: disable=no-else-return
+            warnings.warn("ERROR: SHA1 does not match")
+            return False
+        else:
+            hash_comparison_pass["sha1"] = True
+    else:
+        # file_sha1 is missing - valid only for prefetch blocks
+        warnings.warn("Warning: at least one prefetch missing SHA1")
+
+    # verify at least 1 hash has passed comparison
+    for key in hash_comparison_pass:
+        if hash_comparison_pass[key] is True:
+            return True
 
     # catch all:
     return False
