@@ -26,7 +26,7 @@ def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disabl
     # if prefetch_one is not a dictionary, then parse it into one
     if 'file_size' in bigfix_prefetch:
         parsed_bigfix_prefetch = bigfix_prefetch
-        if not 'raw_prefetch' in parsed_bigfix_prefetch:
+        if 'raw_prefetch' not in parsed_bigfix_prefetch:
             # adding a raw_prefetch value for later warnings
             parsed_bigfix_prefetch['raw_prefetch'] = "NOTE: \
                 source was a prefetch dictionary already"
@@ -83,6 +83,7 @@ def main():
         'file_size': '167936',
         'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
         'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a',
+
         'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
     }
     print(validate_prefetch(prefetch_dictionary_valid))

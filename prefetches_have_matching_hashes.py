@@ -99,6 +99,7 @@ def main():
     prefetch_dictionary_one = {
         'file_name': 'unzip.exe',
         'file_size': '167936',
+
         'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
         'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a',
         'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
