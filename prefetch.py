@@ -55,6 +55,7 @@ def prefetch(prefetch_data, save_file=True):
     print(test_prefetch)
     print(parsed_prefetch)
 
+    # validate the hashes match
     return prefetches_have_matching_hashes.prefetches_have_matching_hashes(
         parsed_prefetch,
         test_prefetch
