@@ -13,7 +13,7 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 #  - https://github.com/jgstew/tools/blob/master/Python/url_to_prefetch.py
 
 # import site
-import os.path
+# import os.path
 
 # add path this script is in
 # site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
