@@ -13,8 +13,14 @@ If enhanced security is a requirement, then SHA256 warnings become exceptions
 
 import warnings
 
-import prefetch_parse
-import prefetch_validate
+import site
+import os.path
+
+# add path this script is in
+site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+
+import prefetch_parse  # pylint: disable=import-error,wrong-import-position
+import prefetch_validate  # pylint: disable=import-error,wrong-import-position
 
 
 def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=False):  # pylint: disable=too-many-branches,too-many-return-statements

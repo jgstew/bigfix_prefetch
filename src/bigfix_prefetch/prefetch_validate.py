@@ -17,12 +17,23 @@ MD5 is never used, only provided for use with IOCs or similar weak validation
 """
 
 import warnings
+import site
+import os.path
 
-import prefetch_parse
+# add path this script is in
+site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+
+import prefetch_parse  # pylint: disable=import-error,wrong-import-position
 
 
-def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disable=too-many-return-statements
+def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disable=too-many-return-statements,too-many-branches
     """Validate the BigFix Prefetch"""
+
+    # prefetch must not be null, empty string, or falsey
+    if not bigfix_prefetch:
+        warnings.warn("ERROR: prefetch is empty or invalid")
+        return False
+
     # if prefetch_one is not a dictionary, then parse it into one
     if 'file_size' in bigfix_prefetch:
         parsed_bigfix_prefetch = bigfix_prefetch
@@ -45,6 +56,11 @@ def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disabl
     # if files_sha256 is present, it must be exactly 64 characters
     if 'file_sha256' in parsed_bigfix_prefetch and len(parsed_bigfix_prefetch['file_sha256']) != 64:
         warnings.warn("ERROR: sha256 not the correct length(64)")
+        return False
+
+    # file_size must be present
+    if 'file_size' not in parsed_bigfix_prefetch:
+        warnings.warn("ERROR: prefetch size is missing\n" + parsed_bigfix_prefetch['raw_prefetch'])
         return False
 
     # file size must be >= 0

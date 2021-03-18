@@ -12,11 +12,11 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 # Related:
 #  - https://github.com/jgstew/tools/blob/master/Python/url_to_prefetch.py
 
-# import site
-# import os.path
+import site
+import os.path
 
 # add path this script is in
-# site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 
 import prefetch_parse  # pylint: disable=import-error,wrong-import-position
 import prefetch_from_url  # pylint: disable=import-error,wrong-import-position
