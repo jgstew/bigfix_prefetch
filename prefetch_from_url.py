@@ -18,11 +18,11 @@ except ImportError:
     from urllib2 import urlopen  # Python 2
 
 
-import site
+# import site
 
 
 # add path this script is in
-site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+# site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 
 import prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
