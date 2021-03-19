@@ -28,17 +28,16 @@ if not args.test_pip:
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
     )
 
-try:
-    from bigfix_prefetch import *
-except ModuleNotFoundError:
-    print("ERROR: package not installed `pip install bigfix-prefetch`")
-    # this is a failure, but only if testing the package through pip was expected
-    raise
+
+from bigfix_prefetch import *
 
 from bigfix_prefetch.prefetch_validate import validate_prefetch  # pylint: disable=import-error
 
+print(prefetch_validate.__file__)
+
 # make sure we are testing the right place:
 if args.test_pip:
+    # this will fail on windows
     assert "/src/bigfix_prefetch/prefetch_validate.py" not in prefetch_validate.__file__
 
 # pylint: disable=line-too-long
