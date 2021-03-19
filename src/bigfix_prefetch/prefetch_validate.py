@@ -43,8 +43,10 @@ def validate_prefetch(prefetch_test, sha256_required=False):  # pylint: disable=
                 source was a prefetch dictionary already"
     else:
         try:
-            parsed_bigfix_prefetch = bigfix_prefetch.parse_prefetch(prefetch_test)
-        except AttributeError:
+            parsed_bigfix_prefetch = bigfix_prefetch.prefetch_parse(prefetch_test)
+        except AttributeError as err:
+            if str(err) != "'NoneType' object has no attribute 'group'":
+                raise
             warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + prefetch_test)
             return False
 
@@ -107,6 +109,7 @@ def main():
     print(validate_prefetch("add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe"))
     print(validate_prefetch("add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=0 url=http://software.bigfix.com/download/redist/unzip-5.52.exe"))
     print(validate_prefetch("add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=ABC url=http://software.bigfix.com/download/redist/unzip-5.52.exe"))
+    print(validate_prefetch('prefetch file.txt sha1:4cbd040533a2f43fc6691d773d510cda70f4126a size:55 http://unknown sha256:41af286dc0b172ed2f1ca934fd2278de4a1192302ffa07087cea2682e7d372e3'))
 
 
 # if called directly, then run this example:
