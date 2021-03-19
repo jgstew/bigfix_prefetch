@@ -29,4 +29,5 @@ jobs:
       - name: Install pylint
         run: pip install pylint
       - name: pylint files
-        run: pylint *.py
+        # https://stackoverflow.com/a/63044665/861745
+        run: pylint $(git ls-files '*.py')
