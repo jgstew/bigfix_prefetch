@@ -1,7 +1,6 @@
 """test bigfix_prefetch installed with pip"""
-
+# pylint: disable=import-error,wildcard-import,undefined-variable,wrong-import-position,R0801
 import os.path
-import site
 import sys
 
 # don't create bytecode for tests because it is cluttery in python2
@@ -15,8 +14,12 @@ except ModuleNotFoundError:
     # this is a failure, but only if testing the package through pip was expected
     raise
 
+print(prefetch_validate.__file__)
 
 from bigfix_prefetch.prefetch_validate import validate_prefetch
+
+# make sure we are testing the right place:
+assert "/src/bigfix_prefetch/prefetch_validate.py" not in prefetch_validate.__file__
 
 # pylint: disable=line-too-long
 
@@ -60,8 +63,6 @@ EXAMPLES_GOOD = [
     # for some reason this is bad on ubuntu when the module is installed with pip? need to investigate.
     "prefetch google.com sha1:f5c694d8dc2804e1fa61515a40b4088e5cd0b91c size:13794 http://google.com/google.com sha256:6378c533fa5224f21b177e72f172a949a5b16c6aad9be625435a0a797c0d31b0",
 ]
-
-# pylint: enable=line-too-long
 
 tests_count = 0  # pylint: disable=invalid-name
 

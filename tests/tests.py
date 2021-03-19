@@ -1,8 +1,10 @@
 """test bigfix_prefetch"""
-
+# pylint: disable=import-error,wildcard-import,undefined-variable,wrong-import-position,R0801
+import argparse
 import os.path
 import site
 import sys
+
 
 # don't create bytecode for tests because it is cluttery in python2
 sys.dont_write_bytecode = True
@@ -13,16 +15,30 @@ sys.dont_write_bytecode = True
 # except ImportError:
 #    import unittest
 
-# add module folder to import paths
-site.addsitedir(
-    os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
-)
+# check for --test_pip arg
+parser = argparse.ArgumentParser()
+parser.add_argument("--test_pip", help="to test package installed with pip",
+                    action="store_true")
+args = parser.parse_args()
 
-# using this method to ensure we are always testing the local code and not a copy installed with pip
-from bigfix_prefetch import *
+if not args.test_pip:
+    # add module folder to import paths for testing local src
+    site.addsitedir(
+        os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
+    )
 
-from bigfix_prefetch.prefetch_validate import validate_prefetch
+try:
+    from bigfix_prefetch import *
+except ModuleNotFoundError:
+    print("ERROR: package not installed `pip install bigfix-prefetch`")
+    # this is a failure, but only if testing the package through pip was expected
+    raise
+
+from bigfix_prefetch.prefetch_validate import validate_prefetch  # pylint: disable=import-error
+
+# make sure we are testing the right place:
+assert "/src/bigfix_prefetch/prefetch_validate.py" in prefetch_validate.__file__
 
 # pylint: disable=line-too-long
 
@@ -66,8 +82,6 @@ EXAMPLES_GOOD = [
     # for some reason this is bad on ubuntu when the module is installed with pip? need to investigate.
     "prefetch google.com sha1:f5c694d8dc2804e1fa61515a40b4088e5cd0b91c size:13794 http://google.com/google.com sha256:6378c533fa5224f21b177e72f172a949a5b16c6aad9be625435a0a797c0d31b0",
 ]
-
-# pylint: enable=line-too-long
 
 tests_count = 0  # pylint: disable=invalid-name
 
