@@ -1,5 +1,5 @@
 ---
-name: test_src
+name: test_pip
 
 on:
   push:
@@ -15,7 +15,7 @@ on:
 
 # https://github.com/actions/setup-python
 jobs:
-  test_src:
+  test_pip:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
