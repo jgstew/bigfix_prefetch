@@ -38,7 +38,8 @@ except ModuleNotFoundError:
 from bigfix_prefetch.prefetch_validate import validate_prefetch  # pylint: disable=import-error
 
 # make sure we are testing the right place:
-assert "/src/bigfix_prefetch/prefetch_validate.py" in prefetch_validate.__file__
+if args.test_pip:
+    assert "/src/bigfix_prefetch/prefetch_validate.py" not in prefetch_validate.__file__
 
 # pylint: disable=line-too-long
 
