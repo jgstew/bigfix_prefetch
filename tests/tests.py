@@ -23,11 +23,10 @@ args = parser.parse_args()
 
 if not args.test_pip:
     # add module folder to import paths for testing local src
-    site.addsitedir(
+    sys.path.append(
         os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
     )
-
 
 from bigfix_prefetch import *
 
