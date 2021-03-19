@@ -69,7 +69,7 @@ for i in EXAMPLES_GOOD:
     tests_count += 1
     assert bigfix_prefetch.prefetch_validate(i) is True
     tests_count += 1
-    assert bigfix_prefetch.prefetches_have_matching_hashes(i,i) is True
+    assert bigfix_prefetch.prefetches_have_matching_hashes(i, i) is True
 
 for i in EXAMPLES_BAD:
     tests_count += 1
@@ -78,13 +78,13 @@ for i in EXAMPLES_BAD:
 
 # test 2 equivalent:
 tests_count += 1
-assert bigfix_prefetch.prefetches_have_matching_hashes(EXAMPLES_GOOD[0],EXAMPLES_GOOD[1]) is True
+assert bigfix_prefetch.prefetches_have_matching_hashes(EXAMPLES_GOOD[0], EXAMPLES_GOOD[1]) is True
 tests_count += 1
-assert bigfix_prefetch.prefetches_have_matching_hashes(EXAMPLES_GOOD[0],EXAMPLES_GOOD[2]) is True
+assert bigfix_prefetch.prefetches_have_matching_hashes(EXAMPLES_GOOD[0], EXAMPLES_GOOD[2]) is True
 
 # test bad comparison due to no matching hashes:
 tests_count += 1
-assert bigfix_prefetch.prefetches_have_matching_hashes(EXAMPLES_GOOD[1],EXAMPLES_GOOD[2]) is False
+assert bigfix_prefetch.prefetches_have_matching_hashes(EXAMPLES_GOOD[1], EXAMPLES_GOOD[2]) is False
 
 
 # pylint: disable=line-too-long
