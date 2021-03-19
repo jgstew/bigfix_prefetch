@@ -26,11 +26,11 @@ def parse_prefetch(prefetch):
         parsed_prefetch['prefetch_type'] = "statement"
         parsed_prefetch['file_name'] = re.search(r'prefetch (\S+) ', prefetch).group(1)
         parsed_prefetch['file_size'] = re.search(r' size:(\d+) ', prefetch).group(1)
-        parsed_prefetch['file_sha1'] = re.search(r' sha1:(\w{40}) ', prefetch).group(1)
+        parsed_prefetch['file_sha1'] = re.search(r' sha1:(\w+) ', prefetch).group(1)
         parsed_prefetch['download_url'] = re.search(r' (\S+://\S+)', prefetch).group(1)
         try:
             # NOTE: sha256 is technically optional, though now "mandatory" for some configs
-            parsed_prefetch['file_sha256'] = re.search(r' sha256:(\w{64})', prefetch).group(1)
+            parsed_prefetch['file_sha256'] = re.search(r' sha256:(\w+)', prefetch).group(1)
         except AttributeError:
             warnings.warn("sha256 is missing which is valid unless enhanced security is enforced")
     if "size=" in prefetch:
@@ -45,13 +45,13 @@ def parse_prefetch(prefetch):
         parsed_prefetch['file_size'] = re.search(r' size=(\d+)', prefetch).group(1)
         try:
             # NOTE: sha1 is NOT required for prefetch blocks, but always expected
-            parsed_prefetch['file_sha1'] = re.search(r' sha1=(\w{40})', prefetch).group(1)
+            parsed_prefetch['file_sha1'] = re.search(r' sha1=(\w+)', prefetch).group(1)
         except AttributeError:
             warnings.warn("prefetch block is missing sha1 which is unusual, but technically valid")
         parsed_prefetch['download_url'] = re.search(r' url=(\S+://\S+)', prefetch).group(1)
         try:
             # NOTE: sha256 is technically optional, though now "mandatory" for some configs
-            parsed_prefetch['file_sha256'] = re.search(r' sha256=(\w{64})', prefetch).group(1)
+            parsed_prefetch['file_sha256'] = re.search(r' sha256=(\w+)', prefetch).group(1)
         except AttributeError:
             warnings.warn("sha256 is missing which is valid unless enhanced security is enforced")
 
