@@ -20,10 +20,10 @@ import warnings
 import site
 import os.path
 
-# add path this script is in
-site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+# add the module path
+site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import prefetch_parse  # pylint: disable=import-error,wrong-import-position
+import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
 
 
 def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disable=too-many-return-statements,too-many-branches
@@ -43,7 +43,7 @@ def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disabl
                 source was a prefetch dictionary already"
     else:
         try:
-            parsed_bigfix_prefetch = prefetch_parse.parse_prefetch(bigfix_prefetch)
+            parsed_bigfix_prefetch = bigfix_prefetch.parse_prefetch(bigfix_prefetch)
         except AttributeError:
             warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + bigfix_prefetch)
             return False

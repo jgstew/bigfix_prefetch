@@ -16,11 +16,11 @@ import warnings
 import site
 import os.path
 
-# add path this script is in
-site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+# add the module path
+site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import prefetch_parse  # pylint: disable=import-error,wrong-import-position
-import prefetch_validate  # pylint: disable=import-error,wrong-import-position
+import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
+import bigfix_prefetch.prefetch_validate  # pylint: disable=import-error,wrong-import-position
 
 
 def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=False):  # pylint: disable=too-many-branches,too-many-return-statements
@@ -32,8 +32,8 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
 
     # ensure both prefetches have the required details
     if not (
-            prefetch_validate.validate_prefetch(prefetch_one)
-            and prefetch_validate.validate_prefetch(prefetch_two)
+            bigfix_prefetch.prefetch_validate(prefetch_one)
+            and bigfix_prefetch.prefetch_validate(prefetch_two)
     ):
         warnings.warn("ERROR: one or more prefetches are invalid")
         return False
@@ -42,13 +42,13 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
     if 'file_size' in prefetch_one:
         parsed_prefetch_one = prefetch_one
     else:
-        parsed_prefetch_one = prefetch_parse.parse_prefetch(prefetch_one)
+        parsed_prefetch_one = bigfix_prefetch.prefetch_parse(prefetch_one)
 
     # if prefetch_two is not a dictionary, then parse it into one
     if 'file_size' in prefetch_two:
         parsed_prefetch_two = prefetch_two
     else:
-        parsed_prefetch_two = prefetch_parse.parse_prefetch(prefetch_two)
+        parsed_prefetch_two = bigfix_prefetch.prefetch_parse(prefetch_two)
 
     # Validate that file_size matches
     try:
