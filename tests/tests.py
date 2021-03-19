@@ -27,6 +27,7 @@ if not args.test_pip:
         os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
     )
+    sys.path.reverse()
 
 from bigfix_prefetch import *
 
