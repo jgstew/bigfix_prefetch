@@ -47,7 +47,7 @@ def validate_prefetch(prefetch_test, sha256_required=False):  # pylint: disable=
         except AttributeError as err:
             if str(err) != "'NoneType' object has no attribute 'group'":
                 raise
-            warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + prefetch_test)
+            warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + prefetch_test + "\n" + str(err))
             return False
 
     #print(parsed_bigfix_prefetch)

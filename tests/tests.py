@@ -60,6 +60,7 @@ EXAMPLES_GOOD = [
     "add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
     "add prefetch item name=unzip.exe sha1=e1652b058195db3f5f754b7ab430652ae04a50b8 size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
     "prefetch file.txt sha1:4cbd040533a2f43fc6691d773d510cda70f4126a size:5 http://unknown sha256:41af286dc0b172ed2f1ca934fd2278de4a1192302ffa07087cea2682e7d372e3",
+    # for some reason this is bad on ubuntu when the module is installed with pip? need to investigate.
     "prefetch google.com sha1:f5c694d8dc2804e1fa61515a40b4088e5cd0b91c size:13794 http://google.com/google.com sha256:6378c533fa5224f21b177e72f172a949a5b16c6aad9be625435a0a797c0d31b0",
 ]
 
