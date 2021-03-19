@@ -1,5 +1,5 @@
 """test bigfix_prefetch"""
-# pylint: disable=import-error,wildcard-import,undefined-variable,wrong-import-position
+# pylint: disable=import-error,wildcard-import,undefined-variable,wrong-import-position,unused-wildcard-import
 
 import argparse
 import os.path
