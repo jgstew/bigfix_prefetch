@@ -1,7 +1,6 @@
 [flake8]
 select = B,C,E,F,P,W,B9
 max-line-length = 88
-extend-ignore = E203, W503, F401
 
 ### DEFAULT IGNORES FOR 4-space INDENTED PROJECTS ###
 # E127, E128 are hard to silence in certain nested formatting situations.
@@ -15,6 +14,11 @@ extend-ignore = E203, W503, F401
 # P208 is a duplicate of C403.
 # W503 talks about operator formatting which is too opinionated.
 ignore = E127, E128, E203, E265, E266, E402, E501, E722, P207, P208, W503
+extend-ignore = E203, W503, F401
+
 exclude =
     .git
     __pycache__
+
+per-file-ignores =
+    tests.py: F403,F405

@@ -1,8 +1,8 @@
 """test bigfix_prefetch"""
-# pylint: disable=import-error,wildcard-import,undefined-variable,wrong-import-position,R0801
+# pylint: disable=import-error,wildcard-import,undefined-variable,wrong-import-position
+
 import argparse
 import os.path
-import site
 import sys
 
 
@@ -27,18 +27,22 @@ if not args.test_pip:
         os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
     )
+    # reverse the order so we make sure to get the local src module
     sys.path.reverse()
 
 from bigfix_prefetch import *
 
 from bigfix_prefetch.prefetch_validate import validate_prefetch  # pylint: disable=import-error
 
-print(prefetch_validate.__file__)
+#print(prefetch_validate.__file__)
 
 # make sure we are testing the right place:
 if args.test_pip:
     # this will fail on windows
     assert "/src/bigfix_prefetch/prefetch_validate.py" not in prefetch_validate.__file__
+else:
+    # check for only 'src' so it will work on windows and non-windows
+    assert "src" in prefetch_validate.__file__
 
 # pylint: disable=line-too-long
 
