@@ -38,7 +38,7 @@ from bigfix_prefetch.prefetch_validate import validate_prefetch  # pylint: disab
 
 # make sure we are testing the right place:
 if args.test_pip:
-    # this will fail on windows
+    # this will false positive on windows
     assert "/src/bigfix_prefetch/prefetch_validate.py" not in prefetch_validate.__file__
 else:
     # check for only 'src' so it will work on windows and non-windows
