@@ -1,21 +1,21 @@
 ---
-name: tests
+name: test_src
 
 on:
   push:
     paths:
       - "**.py"
       - "requirements.txt"
-      - ".github/workflows/tests.yaml"
+      - ".github/workflows/test_src.yaml"
   pull_request:
     paths:
       - "**.py"
       - "requirements.txt"
-      - ".github/workflows/tests.yaml"
+      - ".github/workflows/test_src.yaml"
 
 # https://github.com/actions/setup-python
 jobs:
-  tests:
+  test_src:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
