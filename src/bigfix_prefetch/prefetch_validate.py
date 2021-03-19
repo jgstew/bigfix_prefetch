@@ -26,26 +26,26 @@ site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
 
 
-def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disable=too-many-return-statements,too-many-branches
+def validate_prefetch(prefetch_test, sha256_required=False):  # pylint: disable=too-many-return-statements,too-many-branches
     """Validate the BigFix Prefetch"""
 
     # prefetch must not be null, empty string, or falsey
-    if not bigfix_prefetch:
+    if not prefetch_test:
         warnings.warn("ERROR: prefetch is empty or invalid")
         return False
 
     # if prefetch_one is not a dictionary, then parse it into one
-    if 'file_size' in bigfix_prefetch:
-        parsed_bigfix_prefetch = bigfix_prefetch
+    if 'file_size' in prefetch_test:
+        parsed_bigfix_prefetch = prefetch_test
         if 'raw_prefetch' not in parsed_bigfix_prefetch:
             # adding a raw_prefetch value for later warnings
             parsed_bigfix_prefetch['raw_prefetch'] = "NOTE: \
                 source was a prefetch dictionary already"
     else:
         try:
-            parsed_bigfix_prefetch = bigfix_prefetch.parse_prefetch(bigfix_prefetch)
+            parsed_bigfix_prefetch = bigfix_prefetch.parse_prefetch(prefetch_test)
         except AttributeError:
-            warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + bigfix_prefetch)
+            warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + prefetch_test)
             return False
 
     # if file_sha1 is present, it must be exactly 40 characters
@@ -72,10 +72,10 @@ def validate_prefetch(bigfix_prefetch, sha256_required=False):  # pylint: disabl
     if 'file_sha256' not in parsed_bigfix_prefetch:
         if not sha256_required:
             warnings.warn("INFO: \
-                sha256 is recommended, but missing. Please add it for future requirements.")
+sha256 is recommended, but missing. Please add it for future requirements.")
         else:
             warnings.warn("ERROR: \
-                sha256 is missing but required\n" + parsed_bigfix_prefetch['raw_prefetch'])
+sha256 is missing but required\n" + parsed_bigfix_prefetch['raw_prefetch'])
             return False
 
     # if a prefetch statement, then sha1 MUST be present

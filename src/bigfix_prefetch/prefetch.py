@@ -32,7 +32,7 @@ def prefetch(prefetch_data, save_file=True):
     file_path = None
 
     # make sure prefetch is valid first
-    if not (bigfix_prefetch.prefetch_validate(prefetch_data)):
+    if not bigfix_prefetch.prefetch_validate(prefetch_data):
         warnings.warn("ERROR: bad prefetch")
         sys.exit(1)
 
