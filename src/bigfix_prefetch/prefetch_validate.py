@@ -23,7 +23,9 @@ import os.path
 # add the module path
 site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
+# import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
+
+from bigfix_prefetch.prefetch_parse import parse_prefetch
 
 
 def validate_prefetch(prefetch_test, sha256_required=False):  # pylint: disable=too-many-return-statements,too-many-branches
@@ -43,11 +45,11 @@ def validate_prefetch(prefetch_test, sha256_required=False):  # pylint: disable=
                 source was a prefetch dictionary already"
     else:
         try:
-            parsed_bigfix_prefetch = bigfix_prefetch.prefetch_parse(prefetch_test)
+            parsed_bigfix_prefetch = parse_prefetch(prefetch_test)
         except AttributeError as err:
             if str(err) != "'NoneType' object has no attribute 'group'":
                 raise
-            warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + prefetch_test + "\n" + str(err))
+            warnings.warn("ERROR: prefetch is invalid, could not be parsed\n" + prefetch_test + "\n" + str(err))  # pylint: disable=line-too-long
             return False
 
     #print(parsed_bigfix_prefetch)

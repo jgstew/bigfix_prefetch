@@ -7,6 +7,9 @@ echo "-- run build and publish to public pypi.org pip --"
 echo "-- deleting old dist files --"
 rm dist/*
 
+echo "-- deleting any .pyc files --"
+rm src/*.pyc
+
 # build
 echo "-- run build --"
 python3 -m build

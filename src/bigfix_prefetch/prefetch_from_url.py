@@ -23,7 +23,9 @@ import site
 # add the module path
 site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import bigfix_prefetch.prefetch_from_dictionary  # pylint: disable=wrong-import-position
+from bigfix_prefetch.prefetch_from_dictionary import prefetch_from_dictionary  # pylint: disable=wrong-import-position
+
+#import bigfix_prefetch.prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
 
 def main():
@@ -92,7 +94,7 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
 
     if bool_return_dictionary:
         return prefetch_dictionary
-    return bigfix_prefetch.prefetch_from_dictionary(prefetch_dictionary)
+    return prefetch_from_dictionary(prefetch_dictionary)
 
     # https://www.learnpython.org/en/String_Formatting
     #return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
