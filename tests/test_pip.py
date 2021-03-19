@@ -7,10 +7,12 @@ import sys
 # don't create bytecode for tests because it is cluttery in python2
 sys.dont_write_bytecode = True
 
+#if not prefetch_validate:
 try:
     from bigfix_prefetch import *
 except ModuleNotFoundError:
     print("ERROR: package not installed `pip install bigfix-prefetch`")
+    # this is a failure, but only if testing the package through pip was expected
     raise
 
 
