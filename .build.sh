@@ -8,7 +8,7 @@ echo "-- deleting old dist files --"
 rm dist/*
 
 echo "-- deleting any .pyc files --"
-rm src/*.pyc
+rm src/bigfix_prefetch/*.pyc
 
 # build
 echo "-- run build --"

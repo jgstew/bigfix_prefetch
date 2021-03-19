@@ -32,14 +32,14 @@ def prefetch(prefetch_data, save_file=True):
     file_path = None
 
     # make sure prefetch is valid first
-    if not bigfix_prefetch.prefetch_validate(prefetch_data):
+    if not bigfix_prefetch.prefetch_validate.validate_prefetch(prefetch_data):
         warnings.warn("ERROR: bad prefetch")
         sys.exit(1)
 
     if 'file_size' in prefetch_data:
         parsed_prefetch = prefetch_data
     else:
-        parsed_prefetch = bigfix_prefetch.prefetch_parse(prefetch_data)
+        parsed_prefetch = bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch_data)
     # NOTE: do the download & validation (url_to_prefetch)
 
     # if file_path doesn't exist, then use file_name and current directory
@@ -54,7 +54,7 @@ def prefetch(prefetch_data, save_file=True):
         print(file_path)
 
     # regenerate the prefetch, then compare.
-    test_prefetch = bigfix_prefetch.prefetch_from_url(
+    test_prefetch = bigfix_prefetch.prefetch_from_url.url_to_prefetch(
         parsed_prefetch['download_url'],
         True,
         file_path
@@ -64,7 +64,7 @@ def prefetch(prefetch_data, save_file=True):
     print(parsed_prefetch)
 
     # validate the hashes match
-    return bigfix_prefetch.prefetches_have_matching_hashes(
+    return bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
         parsed_prefetch,
         test_prefetch
     )
