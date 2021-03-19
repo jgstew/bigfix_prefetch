@@ -52,15 +52,17 @@ def validate_prefetch(prefetch_test, sha256_required=False):  # pylint: disable=
 
     #print(parsed_bigfix_prefetch)
 
-    # if file_sha1 is present, it must be exactly 40 characters, cannot contain spaces
-    if 'file_sha1' in parsed_bigfix_prefetch and (len(parsed_bigfix_prefetch['file_sha1']) != 40 or " " in parsed_bigfix_prefetch['file_sha1']):
-        warnings.warn("ERROR: sha1 not the correct length(40)")
-        return False
+    # if file_sha1 is present, it must be exactly 40 characters
+    if 'file_sha1' in parsed_bigfix_prefetch:
+        if len(parsed_bigfix_prefetch['file_sha1']) != 40:
+            warnings.warn("ERROR: sha1 not the correct length(40)")
+            return False
 
     # if files_sha256 is present, it must be exactly 64 characters
-    if 'file_sha256' in parsed_bigfix_prefetch and len(parsed_bigfix_prefetch['file_sha256']) != 64:
-        warnings.warn("ERROR: sha256 not the correct length(64)")
-        return False
+    if 'file_sha256' in parsed_bigfix_prefetch:
+        if len(parsed_bigfix_prefetch['file_sha256']) != 64:
+            warnings.warn("ERROR: sha256 not the correct length(64)")
+            return False
 
     # file_size must be present
     if 'file_size' not in parsed_bigfix_prefetch:
@@ -74,7 +76,7 @@ def validate_prefetch(prefetch_test, sha256_required=False):  # pylint: disable=
 
     if 'file_sha1' not in parsed_bigfix_prefetch:
         # if a prefetch statement, then sha1 MUST be present
-        if ('prefetch_type' in parsed_bigfix_prefetch
+        if ('prefetch_type' in parsed_bigfix_prefetch  # pylint: disable=no-else-return
                 and parsed_bigfix_prefetch['prefetch_type'] == 'statement'):
             warnings.warn("ERROR: sha1 is mandatory in prefetch statement but missing")
             return False

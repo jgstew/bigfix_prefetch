@@ -31,7 +31,17 @@ EXAMPLES_BAD = [
     "add prefetch item name=unzip.exe sha1=8d9b5190aace52a size=55 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
     # sha256 must be 64 characters
     "add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157 size=55 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
+    # sha1 must be 40 characters
     "add prefetch item name=unzip.exe sha1=4cbd040533a2f43f sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=55 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
+    # sha256 must be 64 characters
+    {
+        'file_name': 'unzip.exe',
+        'file_size': '167936',
+        'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
+        'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4aQQ',
+
+        'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
+    },
 ]
 
 EXAMPLES_GOOD = [
@@ -39,6 +49,7 @@ EXAMPLES_GOOD = [
         'file_name': 'unzip.exe',
         'file_size': '167936',
         'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
+
         'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a',
 
         'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
