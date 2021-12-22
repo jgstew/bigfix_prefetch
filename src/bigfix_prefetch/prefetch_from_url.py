@@ -25,21 +25,20 @@ site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from bigfix_prefetch.prefetch_from_dictionary import prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
-#import bigfix_prefetch.prefetch_from_dictionary  # pylint: disable=wrong-import-position
-
-
 def main():
     """Only called if this script is run directly"""
     if len(sys.argv) == 2:
         print(url_to_prefetch(sys.argv[1]))
     else:
+        example_url = "http://software.bigfix.com/download/redist/unzip-5.52.exe"
         print(url_to_prefetch(
-            "http://software.bigfix.com/download/redist/unzip-5.52.exe"  # pylint: disable=line-too-long
+            example_url  # pylint: disable=line-too-long
             , True
         ))
         print(url_to_prefetch(
-            "http://software.bigfix.com/download/redist/unzip-5.52.exe"  # pylint: disable=line-too-long
+            example_url  # pylint: disable=line-too-long
         ))
+        print(prefetch_from_dictionary(url_to_prefetch(example_url, True), "block"))
 
 
 def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
