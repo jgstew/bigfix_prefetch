@@ -25,6 +25,7 @@ site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from bigfix_prefetch.prefetch_from_dictionary import prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
+
 def main():
     """Only called if this script is run directly"""
     if len(sys.argv) == 2:

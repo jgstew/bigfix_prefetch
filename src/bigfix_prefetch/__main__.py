@@ -1,8 +1,7 @@
 """
 To run this module directly
 """
-# TODO: argparse file or url or prompt for input
-
+# pylint: disable=no-else-return
 import argparse
 import os
 
@@ -16,11 +15,12 @@ try:
 except ImportError:
     import prefetch_from_url
 
-def validate_filepath_or_url(filepath_or_url):
+
+def validate_filepath_or_url(filepath_or_url=""):
     """validate string is filepath or URL"""
-    if os.path.isfile(filepath_or_url) and os.access(filepath_or_url, os.R_OK):
-        return filepath_or_url
-    elif "://" in filepath_or_url:
+    if ("://" in filepath_or_url) or (
+        os.path.isfile(filepath_or_url) and os.access(filepath_or_url, os.R_OK)
+    ):
         return filepath_or_url
     else:
         raise ValueError(filepath_or_url)
@@ -32,7 +32,13 @@ def build_argument_parser():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("filepath_or_url", nargs="?", type=validate_filepath_or_url, default="bigfix_prefetch/__init__.py", help="Path to file or URL to create prefetch for.")
+    parser.add_argument(
+        "filepath_or_url",
+        nargs="?",
+        type=validate_filepath_or_url,
+        default="bigfix_prefetch/__init__.py",
+        help="Path to file or URL to create prefetch for.",
+    )
     parser.add_argument(
         "--prefetch-block",
         default=False,
@@ -47,21 +53,25 @@ def build_argument_parser():
 
     return parser
 
+
 def main(argv=None):
     """execution starts here"""
-    #print("bigfix_prefetch __main__ main()")
-    
+    # print("bigfix_prefetch __main__ main()")
+
     # Parse command line arguments.
     argparser = build_argument_parser()
     args = argparser.parse_args(argv)
 
     try:
-        prefetch_result = prefetch_from_file.file_to_prefetch(args.filepath_or_url, args.override_url)
+        prefetch_result = prefetch_from_file.file_to_prefetch(
+            args.filepath_or_url, args.override_url
+        )
         print(prefetch_result)
         return prefetch_result
     except FileNotFoundError:
         prefetch_result = prefetch_from_url.url_to_prefetch(args.filepath_or_url)
         print(prefetch_result)
         return prefetch_result
+
 
 main()
