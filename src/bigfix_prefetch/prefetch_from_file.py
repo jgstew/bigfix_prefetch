@@ -11,7 +11,7 @@ import os
 from hashlib import sha1, sha256
 
 
-def file_to_prefetch(file_path, url="http://unknown"):
+def file_to_prefetch(file_path, url="http://localhost/unknown"):
     """Return the bigfix prefetch generated from the provided file. URL optional.
     This function only reads the file once but computes both hashes using chunks."""
     hashes = sha1(), sha256()
@@ -22,7 +22,7 @@ def file_to_prefetch(file_path, url="http://unknown"):
     file_name = os.path.basename(file_path).replace(' ', '_')
 
     if not(os.path.isfile(file_path) and os.access(file_path, os.R_OK)):
-        return "Error: file does not exist or is not readable! " + file_path
+        raise FileNotFoundError("Error: file does not exist or is not readable! " + file_path)
 
     with open(file_path, 'rb') as file_object:
         while True:
