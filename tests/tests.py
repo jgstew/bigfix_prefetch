@@ -17,24 +17,26 @@ sys.dont_write_bytecode = True
 
 # check for --test_pip arg
 parser = argparse.ArgumentParser()
-parser.add_argument("--test_pip", help="to test package installed with pip",
-                    action="store_true")
+parser.add_argument(
+    "--test_pip", help="to test package installed with pip", action="store_true"
+)
 args = parser.parse_args()
 
 if not args.test_pip:
     # add module folder to import paths for testing local src
     sys.path.append(
-        os.path.join(
-            os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
     )
     # reverse the order so we make sure to get the local src module
     sys.path.reverse()
 
 from bigfix_prefetch import *
 
-from bigfix_prefetch.prefetch_validate import validate_prefetch  # pylint: disable=import-error
+from bigfix_prefetch.prefetch_validate import (
+    validate_prefetch,
+)  # pylint: disable=import-error
 
-#print(prefetch_validate.__file__)
+# print(prefetch_validate.__file__)
 
 # make sure we are testing the right place:
 if args.test_pip:
@@ -61,24 +63,21 @@ EXAMPLES_BAD = [
     "add prefetch item name=unzip.exe sha1=4cbd040533a2f43f sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=55 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
     # sha256 must be 64 characters
     {
-        'file_name': 'unzip.exe',
-        'file_size': '167936',
-        'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
-        'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4aQQ',
-
-        'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
+        "file_name": "unzip.exe",
+        "file_size": "167936",
+        "file_sha1": "e1652b058195db3f5f754b7ab430652ae04a50b8",
+        "file_sha256": "8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4aQQ",
+        "download_url": "http://software.bigfix.com/download/redist/unzip-5.52.exe",
     },
 ]
 
 EXAMPLES_GOOD = [
     {
-        'file_name': 'unzip.exe',
-        'file_size': '167936',
-        'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
-
-        'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a',
-
-        'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
+        "file_name": "unzip.exe",
+        "file_size": "167936",
+        "file_sha1": "e1652b058195db3f5f754b7ab430652ae04a50b8",
+        "file_sha256": "8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a",
+        "download_url": "http://software.bigfix.com/download/redist/unzip-5.52.exe",
     },
     "add prefetch item name=unzip.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
     "add prefetch item name=unzip.exe sha1=e1652b058195db3f5f754b7ab430652ae04a50b8 size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe",
@@ -91,7 +90,7 @@ tests_count = 0  # pylint: disable=invalid-name
 
 
 for i in EXAMPLES_GOOD:
-    #print(i)
+    # print(i)
     tests_count += 1
     assert prefetch_validate.validate_prefetch(i) is True
     tests_count += 1
@@ -101,33 +100,56 @@ for i in EXAMPLES_GOOD:
 
 for i in EXAMPLES_BAD:
     tests_count += 1
-    #print(i)
+    # print(i)
     assert prefetch_validate.validate_prefetch(i) is False
 
 # test 2 equivalent:
 tests_count += 1
-assert prefetches_have_matching_hashes.prefetches_have_matching_hashes(EXAMPLES_GOOD[0], EXAMPLES_GOOD[1]) is True
+assert (
+    prefetches_have_matching_hashes.prefetches_have_matching_hashes(
+        EXAMPLES_GOOD[0], EXAMPLES_GOOD[1]
+    )
+    is True
+)
 tests_count += 1
-assert prefetches_have_matching_hashes.prefetches_have_matching_hashes(EXAMPLES_GOOD[0], EXAMPLES_GOOD[2]) is True
+assert (
+    prefetches_have_matching_hashes.prefetches_have_matching_hashes(
+        EXAMPLES_GOOD[0], EXAMPLES_GOOD[2]
+    )
+    is True
+)
 
 # test bad comparison due to no matching hashes:
 tests_count += 1
-assert prefetches_have_matching_hashes.prefetches_have_matching_hashes(EXAMPLES_GOOD[1], EXAMPLES_GOOD[2]) is False
+assert (
+    prefetches_have_matching_hashes.prefetches_have_matching_hashes(
+        EXAMPLES_GOOD[1], EXAMPLES_GOOD[2]
+    )
+    is False
+)
 
 
 # pylint: disable=line-too-long
 
 # test against known output
 tests_count += 1
-assert prefetch_from_dictionary.prefetch_from_dictionary(EXAMPLES_GOOD[0]) == "prefetch unzip.exe sha1:e1652b058195db3f5f754b7ab430652ae04a50b8 size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe sha256:8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a"
+assert (
+    prefetch_from_dictionary.prefetch_from_dictionary(EXAMPLES_GOOD[0])
+    == "prefetch unzip.exe sha1:e1652b058195db3f5f754b7ab430652ae04a50b8 size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe sha256:8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a"
+)
 
 # test against known output
 tests_count += 1
-assert prefetch_from_dictionary.prefetch_from_dictionary(EXAMPLES_GOOD[0], "block") == "add prefetch item name=unzip.exe sha1=e1652b058195db3f5f754b7ab430652ae04a50b8 size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a"
+assert (
+    prefetch_from_dictionary.prefetch_from_dictionary(EXAMPLES_GOOD[0], "block")
+    == "add prefetch item name=unzip.exe sha1=e1652b058195db3f5f754b7ab430652ae04a50b8 size=167936 url=http://software.bigfix.com/download/redist/unzip-5.52.exe sha256=8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a"
+)
 
 # test against known output
 tests_count += 1
-assert "prefetch tests.py " in prefetch_from_file.file_to_prefetch(os.path.abspath(__file__))
+assert "prefetch tests.py " in prefetch_from_file.file_to_prefetch(
+    os.path.abspath(__file__)
+)
 
 # test against known output
 # NOTE: This is will actually get the file from the internet, which could be slow or fail for transient network reasons

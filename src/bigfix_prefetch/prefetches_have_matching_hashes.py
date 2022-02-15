@@ -23,7 +23,9 @@ from bigfix_prefetch.prefetch_parse import parse_prefetch
 from bigfix_prefetch.prefetch_validate import validate_prefetch
 
 
-def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=False):  # pylint: disable=too-many-branches,too-many-return-statements
+def prefetches_have_matching_hashes(
+    prefetch_one, prefetch_two, sha256_required=False
+):  # pylint: disable=too-many-branches,too-many-return-statements
     """Compare the file size and hashes to make sure they match"""
     hash_comparison_pass = {
         "sha256": None,
@@ -31,28 +33,27 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
     }
 
     # ensure both prefetches have the required details
-    if not (
-            validate_prefetch(prefetch_one)
-            and validate_prefetch(prefetch_two)
-    ):
+    if not (validate_prefetch(prefetch_one) and validate_prefetch(prefetch_two)):
         warnings.warn("ERROR: one or more prefetches are invalid")
         return False
 
     # if prefetch_one is not a dictionary, then parse it into one
-    if 'file_size' in prefetch_one:
+    if "file_size" in prefetch_one:
         parsed_prefetch_one = prefetch_one
     else:
         parsed_prefetch_one = parse_prefetch(prefetch_one)
 
     # if prefetch_two is not a dictionary, then parse it into one
-    if 'file_size' in prefetch_two:
+    if "file_size" in prefetch_two:
         parsed_prefetch_two = prefetch_two
     else:
         parsed_prefetch_two = parse_prefetch(prefetch_two)
 
     # Validate that file_size matches
     try:
-        if int(parsed_prefetch_one['file_size']) != int(parsed_prefetch_two['file_size']):
+        if int(parsed_prefetch_one["file_size"]) != int(
+            parsed_prefetch_two["file_size"]
+        ):
             warnings.warn("ERROR: file_size does not match")
             return False
     except ValueError:
@@ -60,12 +61,12 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
         return False
 
     # check if file_sha256 is present
-    if (
-            ("file_sha256" in parsed_prefetch_one)
-            and ("file_sha256" in parsed_prefetch_two)
+    if ("file_sha256" in parsed_prefetch_one) and (
+        "file_sha256" in parsed_prefetch_two
     ):
         # check if file_sha256 matches
-        if parsed_prefetch_one['file_sha256'] != parsed_prefetch_two['file_sha256']:  # pylint: disable=no-else-return
+        # pylint: disable=no-else-return
+        if parsed_prefetch_one["file_sha256"] != parsed_prefetch_two["file_sha256"]:
             warnings.warn("ERROR: file_sha256 does not match")
             return False
         else:
@@ -77,12 +78,10 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
             return False
 
     # check if file_sha1 is present
-    if (
-            ("file_sha1" in parsed_prefetch_one)
-            and ("file_sha1" in parsed_prefetch_two)
-    ):
+    if ("file_sha1" in parsed_prefetch_one) and ("file_sha1" in parsed_prefetch_two):
         # check file_sha1 matches
-        if parsed_prefetch_one['file_sha1'] != parsed_prefetch_two['file_sha1']:  # pylint: disable=no-else-return
+        # pylint: disable=no-else-return
+        if parsed_prefetch_one["file_sha1"] != parsed_prefetch_two["file_sha1"]:
             warnings.warn("ERROR: SHA1 does not match")
             return False
         else:
@@ -103,18 +102,19 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
 def main():
     """Only called if this script is run directly"""
     prefetch_dictionary_one = {
-        'file_name': 'unzip.exe',
-        'file_size': '167936',
-
-        'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
-        'file_sha256': '8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a',
-        'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
+        "file_name": "unzip.exe",
+        "file_size": "167936",
+        "file_sha1": "e1652b058195db3f5f754b7ab430652ae04a50b8",
+        "file_sha256": "8d9b5190aace52a1db1ac73a65ee9999c329157c8e88f61a772433323d6b7a4a",
+        "download_url": "http://software.bigfix.com/download/redist/unzip-5.52.exe",
     }
     print(
-        prefetches_have_matching_hashes(prefetch_dictionary_one, prefetch_dictionary_one)
+        prefetches_have_matching_hashes(
+            prefetch_dictionary_one, prefetch_dictionary_one
+        )
     )
 
 
 # if called directly, then run this example:
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

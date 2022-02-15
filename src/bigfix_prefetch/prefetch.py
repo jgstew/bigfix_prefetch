@@ -36,7 +36,7 @@ def prefetch(prefetch_data, save_file=True):
         warnings.warn("ERROR: bad prefetch")
         sys.exit(1)
 
-    if 'file_size' in prefetch_data:
+    if "file_size" in prefetch_data:
         parsed_prefetch = prefetch_data
     else:
         parsed_prefetch = bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch_data)
@@ -47,17 +47,15 @@ def prefetch(prefetch_data, save_file=True):
     #  then validate it against prefetch data
 
     if save_file:
-        if 'file_path' in parsed_prefetch:
-            file_path = parsed_prefetch['file_path']
+        if "file_path" in parsed_prefetch:
+            file_path = parsed_prefetch["file_path"]
         else:
-            file_path = parsed_prefetch['file_name']
+            file_path = parsed_prefetch["file_name"]
         print(file_path)
 
     # regenerate the prefetch, then compare.
     test_prefetch = bigfix_prefetch.prefetch_from_url.url_to_prefetch(
-        parsed_prefetch['download_url'],
-        True,
-        file_path
+        parsed_prefetch["download_url"], True, file_path
     )
 
     print(test_prefetch)
@@ -65,18 +63,17 @@ def prefetch(prefetch_data, save_file=True):
 
     # validate the hashes match
     return bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
-        parsed_prefetch,
-        test_prefetch
+        parsed_prefetch, test_prefetch
     )
 
 
 def main():
     """Only called if prefetch is run directly"""
     prefetch_test = {
-        'file_name': 'unzip.exe',
-        'file_size': '167936',
-        'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
-        'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
+        "file_name": "unzip.exe",
+        "file_size": "167936",
+        "file_sha1": "e1652b058195db3f5f754b7ab430652ae04a50b8",
+        "download_url": "http://software.bigfix.com/download/redist/unzip-5.52.exe",
     }
     prefetch_result = prefetch(prefetch_test, False)
     print(prefetch_result)
@@ -84,5 +81,5 @@ def main():
 
 
 # if called directly, then run this example:
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

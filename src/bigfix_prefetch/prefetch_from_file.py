@@ -19,12 +19,14 @@ def file_to_prefetch(file_path, url="http://localhost/unknown"):
     file_size = 0
     # changing spaces in file name to underscores due to prefetch issues without it
     #  alternatively, could download as sha1 and rename after
-    file_name = os.path.basename(file_path).replace(' ', '_')
+    file_name = os.path.basename(file_path).replace(" ", "_")
 
-    if not(os.path.isfile(file_path) and os.access(file_path, os.R_OK)):
-        raise FileNotFoundError("Error: file does not exist or is not readable! " + file_path)
+    if not (os.path.isfile(file_path) and os.access(file_path, os.R_OK)):
+        raise FileNotFoundError(
+            "Error: file does not exist or is not readable! " + file_path
+        )
 
-    with open(file_path, 'rb') as file_object:
+    with open(file_path, "rb") as file_object:
         while True:
             chunk = file_object.read(chunk_size)
             if not chunk:
@@ -37,8 +39,13 @@ def file_to_prefetch(file_path, url="http://localhost/unknown"):
     # print("Debug_Info:: file:" + file_path + " url:" + url + \
     #            " chunksize:" + str(chunk_size))
     # NOTE: this should probably return a hash so that the format can be handled elsewhere.
-    return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
-                (file_name, hashes[0].hexdigest(), file_size, url, hashes[1].hexdigest())
+    return "prefetch %s sha1:%s size:%d %s sha256:%s" % (
+        file_name,
+        hashes[0].hexdigest(),
+        file_size,
+        url,
+        hashes[1].hexdigest(),
+    )
 
 
 def main(file_path="LICENSE"):
@@ -47,5 +54,5 @@ def main(file_path="LICENSE"):
 
 
 # if called directly, then run this example:
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

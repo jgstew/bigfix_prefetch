@@ -32,13 +32,8 @@ def main():
         print(url_to_prefetch(sys.argv[1]))
     else:
         example_url = "http://software.bigfix.com/download/redist/unzip-5.52.exe"
-        print(url_to_prefetch(
-            example_url  # pylint: disable=line-too-long
-            , True
-        ))
-        print(url_to_prefetch(
-            example_url  # pylint: disable=line-too-long
-        ))
+        print(url_to_prefetch(example_url, True))  # pylint: disable=line-too-long
+        print(url_to_prefetch(example_url))  # pylint: disable=line-too-long
         print(prefetch_from_dictionary(url_to_prefetch(example_url, True), "block"))
 
 
@@ -59,7 +54,9 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     if file_save_path:
         # check if file already exists
         if not os.path.exists(file_save_path):
-            file_save = open(file_save_path, 'wb')  # pylint: disable=consider-using-with
+            # pylint: disable=consider-using-with
+            file_save = open(file_save_path, "wb")
+            # pylint: enable=consider-using-with
         else:
             # consider deleting the file?
             print("WARNING: file already exists")
@@ -85,24 +82,24 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     if file_save:
         file_save.close()
 
-    prefetch_dictionary['file_name'] = filename
-    prefetch_dictionary['file_size'] = size
-    prefetch_dictionary['file_sha1'] = hashes[0].hexdigest()
-    prefetch_dictionary['file_sha256'] = hashes[1].hexdigest()
-    prefetch_dictionary['file_md5'] = hashes[2].hexdigest()
-    prefetch_dictionary['download_url'] = url
+    prefetch_dictionary["file_name"] = filename
+    prefetch_dictionary["file_size"] = size
+    prefetch_dictionary["file_sha1"] = hashes[0].hexdigest()
+    prefetch_dictionary["file_sha256"] = hashes[1].hexdigest()
+    prefetch_dictionary["file_md5"] = hashes[2].hexdigest()
+    prefetch_dictionary["download_url"] = url
 
     if bool_return_dictionary:
         return prefetch_dictionary
     return prefetch_from_dictionary(prefetch_dictionary)
 
     # https://www.learnpython.org/en/String_Formatting
-    #return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
+    # return "prefetch %s sha1:%s size:%d %s sha256:%s" % \
     #            (filename, hashes[0].hexdigest(), size, url, hashes[1].hexdigest())
 
 
 # if called directly, then run this example:
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # References:
@@ -110,7 +107,7 @@ if __name__ == '__main__':
 # https://gist.github.com/Zireael-N/ed36997fd1a967d78cb2
 
 #  AWS Lambda
-#from url_to_prefetch import url_to_prefetch
-#def lambda_handler(event, context):
+# from url_to_prefetch import url_to_prefetch
+# def lambda_handler(event, context):
 #    print( event['url_to_prefetch'] )
 #    return url_to_prefetch( event['url_to_prefetch'] )
