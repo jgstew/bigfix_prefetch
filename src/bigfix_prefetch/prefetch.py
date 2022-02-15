@@ -62,8 +62,10 @@ def prefetch(prefetch_data, save_file=True):
     print(parsed_prefetch)
 
     # validate the hashes match
-    return bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
-        parsed_prefetch, test_prefetch
+    return (
+        bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
+            parsed_prefetch, test_prefetch
+        )
     )
 
 
