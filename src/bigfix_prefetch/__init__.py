@@ -9,3 +9,5 @@ from . import prefetch_from_file
 from . import prefetch_from_url
 from . import prefetch_parse
 from . import prefetch
+
+__version__ = "1.0.2"
