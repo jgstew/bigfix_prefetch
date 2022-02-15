@@ -78,7 +78,9 @@ def main():
         'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
         'download_url': 'http://software.bigfix.com/download/redist/unzip-5.52.exe'
     }
-    print(prefetch(prefetch_test, False))
+    prefetch_result = prefetch(prefetch_test, False)
+    print(prefetch_result)
+    return prefetch_result
 
 
 # if called directly, then run this example:

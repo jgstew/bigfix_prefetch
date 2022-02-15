@@ -131,8 +131,8 @@ assert "prefetch tests.py " in prefetch_from_file.file_to_prefetch(os.path.abspa
 
 # test against known output
 # NOTE: This is will actually get the file from the internet, which could be slow or fail for transient network reasons
-# tests_count += 1
-# assert bigfix_prefetch.prefetch.prefetch(EXAMPLES_GOOD[0], False) is True
+tests_count += 1
+assert prefetch.prefetch(EXAMPLES_GOOD[0], False) is True
 
 # tests pass, return 0:
 print("-------------------------------------")
