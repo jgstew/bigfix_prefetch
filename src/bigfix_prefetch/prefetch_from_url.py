@@ -59,7 +59,7 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     if file_save_path:
         # check if file already exists
         if not os.path.exists(file_save_path):
-            file_save = open(file_save_path, 'wb')
+            file_save = open(file_save_path, 'wb')  # pylint: disable=consider-using-with
         else:
             # consider deleting the file?
             print("WARNING: file already exists")

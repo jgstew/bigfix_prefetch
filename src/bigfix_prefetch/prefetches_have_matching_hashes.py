@@ -94,7 +94,7 @@ def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=
         warnings.warn("Warning: at least one prefetch missing SHA1")
 
     # verify at least 1 hash has passed comparison
-    for key in hash_comparison_pass:
+    for key in hash_comparison_pass:  # pylint: disable=consider-using-dict-items
         if hash_comparison_pass[key] is True:
             return True
 
