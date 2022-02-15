@@ -11,18 +11,16 @@ BigFix Prefetch Comparison:
 If enhanced security is a requirement, then SHA256 warnings become exceptions
 """
 
-import warnings
-
-import site
 import os.path
+import site
+import warnings
 
 # add the module path
 site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from bigfix_prefetch.prefetch_parse import parse_prefetch  # pylint: disable=import-error,wrong-import-position
-from bigfix_prefetch.prefetch_validate import validate_prefetch  # pylint: disable=import-error,wrong-import-position
-# import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
-# import bigfix_prefetch.prefetch_validate  # pylint: disable=import-error,wrong-import-position
+# pylint: disable=import-error,wrong-import-position
+from bigfix_prefetch.prefetch_parse import parse_prefetch
+from bigfix_prefetch.prefetch_validate import validate_prefetch
 
 
 def prefetches_have_matching_hashes(prefetch_one, prefetch_two, sha256_required=False):  # pylint: disable=too-many-branches,too-many-return-statements

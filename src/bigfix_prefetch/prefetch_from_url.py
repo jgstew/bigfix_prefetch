@@ -7,23 +7,23 @@ function url_to_prefetch(url) takes
 """
 # NOTE: Consider adding options to cache the file downloads & log/cache the prefetches generated
 
-import sys
 import os.path
 import posixpath
-from hashlib import sha1, sha256, md5
+import sys
+from hashlib import md5, sha1, sha256
 
 try:
     from urllib.request import urlopen  # Python 3
 except ImportError:
     from urllib2 import urlopen  # Python 2
 
-
 import site
 
 # add the module path
 site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from bigfix_prefetch.prefetch_from_dictionary import prefetch_from_dictionary  # pylint: disable=wrong-import-position
+# pylint: disable=wrong-import-position
+from bigfix_prefetch.prefetch_from_dictionary import prefetch_from_dictionary
 
 
 def main():

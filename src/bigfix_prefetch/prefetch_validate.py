@@ -16,9 +16,9 @@ If enhanced security is a requirement, then SHA256 warnings become exceptions
 MD5 is never used, only provided for use with IOCs or similar weak validation
 """
 
-import warnings
-import site
 import os.path
+import site
+import warnings
 
 # add the module path
 site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

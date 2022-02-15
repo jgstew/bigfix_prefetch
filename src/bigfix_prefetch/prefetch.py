@@ -12,18 +12,18 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 # Related:
 #  - https://github.com/jgstew/tools/blob/master/Python/url_to_prefetch.py
 
-import sys
-import site
 import os.path
+import site
+import sys
 import warnings
 
 # add the module path
 site.addsitedir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
 import bigfix_prefetch.prefetch_from_url  # pylint: disable=import-error,wrong-import-position
-import bigfix_prefetch.prefetches_have_matching_hashes  # pylint: disable=import-error,wrong-import-position
+import bigfix_prefetch.prefetch_parse  # pylint: disable=import-error,wrong-import-position
 import bigfix_prefetch.prefetch_validate  # pylint: disable=import-error,wrong-import-position
+import bigfix_prefetch.prefetches_have_matching_hashes  # pylint: disable=import-error,wrong-import-position
 
 
 def prefetch(prefetch_data, save_file=True):

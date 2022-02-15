@@ -2,12 +2,14 @@
 import functions so they can be run as the module
 """
 
-from . import prefetch_validate
-from . import prefetches_have_matching_hashes
-from . import prefetch_from_dictionary
-from . import prefetch_from_file
-from . import prefetch_from_url
-from . import prefetch_parse
-from . import prefetch
+from . import (
+    prefetch,
+    prefetch_from_dictionary,
+    prefetch_from_file,
+    prefetch_from_url,
+    prefetch_parse,
+    prefetch_validate,
+    prefetches_have_matching_hashes,
+)
 
 __version__ = "1.0.2"
