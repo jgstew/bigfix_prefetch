@@ -9,6 +9,7 @@ function url_to_prefetch(url) takes
 
 import os.path
 import posixpath
+import ssl
 import sys
 from hashlib import md5, sha1, sha256
 
@@ -47,6 +48,11 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
     chunksize = max(384000, max(a_hash.block_size for a_hash in hashes))
     size = 0
 
+    # disable SSL validation due to python CA issues:
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
     # NOTE: handle other cases, ensure default name if none set
     filename = posixpath.basename(url)
     file_save = None
@@ -62,7 +68,7 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
             print("WARNING: file already exists")
 
     # start download process:
-    response = urlopen(url)
+    response = urlopen(url, context=ctx)
     # NOTE: Get Header If Present for Download Estimate:
     #               int(req.info().getheader('Content-Length').strip())
     while True:
