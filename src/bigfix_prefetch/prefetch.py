@@ -25,6 +25,22 @@ import bigfix_prefetch.prefetch_validate  # pylint: disable=import-error,wrong-i
 import bigfix_prefetch.prefetches_have_matching_hashes  # pylint: disable=import-error,wrong-import-position
 
 
+def add_sha256_prefetch(prefetch_to_update, save_file=False):
+    """This function will update a prefetch to add sha256"""
+
+    # get prefetch type: (block or statement)
+    parsed = bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch_to_update)
+
+    # get updated prefetch: (the False means the file will not be saved to disk)
+    updated_prefetch = bigfix_prefetch.prefetch.prefetch(prefetch_to_update, save_file)
+
+    updated_prefetch["prefetch_type"] = parsed["prefetch_type"]
+
+    return bigfix_prefetch.prefetch_from_dictionary.prefetch_from_dictionary(
+        updated_prefetch
+    )
+
+
 def prefetch(prefetch_data, save_file=True):
     """actually prefetch the file and validate the file and prefetch data"""
     parsed_prefetch = {}
