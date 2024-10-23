@@ -8,24 +8,28 @@ This WILL cause the file to be downloaded over the internet in the prefetch, tho
 import bigfix_prefetch
 
 
-def main():
-    """Only called if prefetch is run directly"""
-    prefetch_to_update = "prefetch unzip.exe sha1:e1652b058195db3f5f754b7ab430652ae04a50b8 size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe"
+def add_sha256_prefetch(prefetch_to_update, save_file=False):
+    """This function will update a prefetch to add sha256"""
 
     # get prefetch type: (block or statement)
     parsed = bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch_to_update)
 
     # get updated prefetch: (the False means the file will not be saved to disk)
-    updated_prefetch = bigfix_prefetch.prefetch.prefetch(prefetch_to_update, False)
+    updated_prefetch = bigfix_prefetch.prefetch.prefetch(prefetch_to_update, save_file)
 
     updated_prefetch["prefetch_type"] = parsed["prefetch_type"]
 
-    print("Updated Prefetch:")
-    print(
-        bigfix_prefetch.prefetch_from_dictionary.prefetch_from_dictionary(
-            updated_prefetch
-        )
+    return bigfix_prefetch.prefetch_from_dictionary.prefetch_from_dictionary(
+        updated_prefetch
     )
+
+
+def main():
+    """Only called if prefetch is run directly"""
+    prefetch_to_update = "prefetch unzip.exe sha1:e1652b058195db3f5f754b7ab430652ae04a50b8 size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe"
+
+    print("Updated Prefetch:")
+    print(add_sha256_prefetch(prefetch_to_update))
 
 
 # if called directly, then run this example:
