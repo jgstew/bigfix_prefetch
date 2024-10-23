@@ -70,11 +70,11 @@ def prefetch(prefetch_data, save_file=True):
     if result:
         print("prefetches match!")
         return test_prefetch
-    else:
-        print(
-            "ERROR: FAILED: prefetches do not match! either the prefetch or the download is invalid!"
-        )
-        return None
+
+    print(
+        "ERROR: FAILED: prefetches do not match! either the prefetch or the download is invalid!"
+    )
+    return None
 
 
 def main():
