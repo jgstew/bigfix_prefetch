@@ -12,4 +12,4 @@ from . import (
     prefetches_have_matching_hashes,
 )
 
-__version__ = "1.1.4"
+__version__ = "1.1.5"
