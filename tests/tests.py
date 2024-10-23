@@ -1,10 +1,10 @@
 """test bigfix_prefetch"""
+
 # pylint: disable=import-error,wildcard-import,undefined-variable,wrong-import-position,unused-wildcard-import
 
 import argparse
 import os.path
 import sys
-
 
 # don't create bytecode for tests because it is cluttery in python2
 sys.dont_write_bytecode = True
@@ -31,10 +31,9 @@ if not args.test_pip:
     sys.path.reverse()
 
 from bigfix_prefetch import *
-
-from bigfix_prefetch.prefetch_validate import (
+from bigfix_prefetch.prefetch_validate import (  # pylint: disable=import-error
     validate_prefetch,
-)  # pylint: disable=import-error
+)
 
 # print(prefetch_validate.__file__)
 

@@ -43,10 +43,10 @@ def validate_prefetch(
         parsed_bigfix_prefetch = prefetch_test
         if "raw_prefetch" not in parsed_bigfix_prefetch:
             # adding a raw_prefetch value for later warnings
-            parsed_bigfix_prefetch[
-                "raw_prefetch"
-            ] = "NOTE: \
+            parsed_bigfix_prefetch["raw_prefetch"] = (
+                "NOTE: \
                 source was a prefetch dictionary already"
+            )
     else:
         try:
             parsed_bigfix_prefetch = parse_prefetch(prefetch_test)

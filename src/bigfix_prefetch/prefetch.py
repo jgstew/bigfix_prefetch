@@ -61,15 +61,19 @@ def prefetch(prefetch_data, save_file=True):
     print(parsed_prefetch)
 
     # get boolean result of if prefetches match:
-    result = bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
+    result = (
+        bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
             parsed_prefetch, test_prefetch
         )
+    )
 
     if result:
         print("prefetches match!")
         return test_prefetch
     else:
-        print("ERROR: FAILED: prefetches do not match! either the prefetch or the download is invalid!")
+        print(
+            "ERROR: FAILED: prefetches do not match! either the prefetch or the download is invalid!"
+        )
         return None
 
 

@@ -1,6 +1,7 @@
 """
 To run this module directly
 """
+
 # pylint: disable=no-else-return
 import argparse
 import os
