@@ -1,17 +1,19 @@
 ---
 name: test_pip
 
-on: workflow_dispatch
-  # push:
-  #   paths:
-  #     - "setup.cfg"
-  #     - "requirements.txt"
-  #     - ".github/workflows/test_pip.yaml"
-  # pull_request:
-  #   paths:
-  #     - "setup.cfg"
-  #     - "requirements.txt"
-  #     - ".github/workflows/test_pip.yaml"
+on:
+  push:
+    paths:
+      - "src/**.py"
+      - "setup.cfg"
+      - "requirements.txt"
+      - ".github/workflows/test_pip.yaml"
+  pull_request:
+    paths:
+      - "src/**.py"
+      - "setup.cfg"
+      - "requirements.txt"
+      - ".github/workflows/test_pip.yaml"
 
 # https://github.com/actions/setup-python
 jobs:
@@ -30,13 +32,33 @@ jobs:
             python-version: '3.1'
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-      - name: pip install self
-        run: pip install bigfix-prefetch
+
+      - name: Install build tools
+        run: pip install setuptools wheel build pyinstaller
+
+      - name: Install requirements
+        shell: bash
+        run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run build
+        run: python3 -m build
+
+      - name: Get Wheel File Path
+        id: getwheelfile
+        shell: bash
+        run: echo "::set-output name=wheelfile::$(find "dist" -type f -name "*.whl")"
+
+      - name: Test pip install of wheel
+        shell: bash
+        run: pip install $(find "dist" -type f -name "*.whl")
+
       - name: Run Tests
         run: python tests/tests.py --test_pip

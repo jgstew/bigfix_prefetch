@@ -4,7 +4,7 @@ This example is how to update a prefetch to add sha256 hashes to a prefetch.
 This WILL cause the file to be downloaded over the internet in the prefetch, though the file will not be saved to disk by default.
 """
 
-# NOTE: this example requires bigfix_prefetch 1.0.4+
+# NOTE: this example requires bigfix_prefetch 1.1.4+
 import bigfix_prefetch
 
 

@@ -4,12 +4,12 @@ name: test_src
 on:
   push:
     paths:
-      - "**.py"
+      - "src/**.py"
       - "requirements.txt"
       - ".github/workflows/test_src.yaml"
   pull_request:
     paths:
-      - "**.py"
+      - "src/**.py"
       - "requirements.txt"
       - ".github/workflows/test_src.yaml"
 
