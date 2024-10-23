@@ -1,17 +1,17 @@
 ---
 name: test_pip
 
-on:
-  push:
-    paths:
-      - "setup.cfg"
-      - "requirements.txt"
-      - ".github/workflows/test_pip.yaml"
-  pull_request:
-    paths:
-      - "setup.cfg"
-      - "requirements.txt"
-      - ".github/workflows/test_pip.yaml"
+on: workflow_dispatch
+  # push:
+  #   paths:
+  #     - "setup.cfg"
+  #     - "requirements.txt"
+  #     - ".github/workflows/test_pip.yaml"
+  # pull_request:
+  #   paths:
+  #     - "setup.cfg"
+  #     - "requirements.txt"
+  #     - ".github/workflows/test_pip.yaml"
 
 # https://github.com/actions/setup-python
 jobs:
