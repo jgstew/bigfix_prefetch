@@ -1,3 +1,9 @@
+"""
+This example is how to update a prefetch to add sha256 hashes to a prefetch.
+
+This WILL cause the file to be downloaded over the internet in the prefetch, though the file will not be saved to disk by default.
+"""
+
 # NOTE: this example requires bigfix_prefetch 1.0.4+
 import bigfix_prefetch
 
@@ -9,7 +15,7 @@ def main():
     # get prefetch type: (block or statement)
     parsed = bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch_to_update)
 
-    # get updated prefetch:
+    # get updated prefetch: (the False means the file will not be saved to disk)
     updated_prefetch = bigfix_prefetch.prefetch.prefetch(prefetch_to_update, False)
 
     updated_prefetch["prefetch_type"] = parsed["prefetch_type"]
