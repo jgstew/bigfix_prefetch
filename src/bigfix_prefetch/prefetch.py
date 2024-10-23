@@ -14,7 +14,6 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 
 import os.path
 import site
-import sys
 import warnings
 
 # add the module path
@@ -34,7 +33,7 @@ def prefetch(prefetch_data, save_file=True):
     # make sure prefetch is valid first
     if not bigfix_prefetch.prefetch_validate.validate_prefetch(prefetch_data):
         warnings.warn("ERROR: bad prefetch")
-        sys.exit(1)
+        raise AttributeError
 
     if "file_size" in prefetch_data:
         parsed_prefetch = prefetch_data
@@ -61,12 +60,17 @@ def prefetch(prefetch_data, save_file=True):
     print(test_prefetch)
     print(parsed_prefetch)
 
-    # validate the hashes match
-    return (
-        bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
+    # get boolean result of if prefetches match:
+    result = bigfix_prefetch.prefetches_have_matching_hashes.prefetches_have_matching_hashes(
             parsed_prefetch, test_prefetch
         )
-    )
+
+    if result:
+        print("prefetches match!")
+        return test_prefetch
+    else:
+        print("ERROR: FAILED: prefetches do not match! either the prefetch or the download is invalid!")
+        return None
 
 
 def main():

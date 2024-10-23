@@ -154,7 +154,8 @@ assert "prefetch tests.py " in prefetch_from_file.file_to_prefetch(
 # test against known output
 # NOTE: This is will actually get the file from the internet, which could be slow or fail for transient network reasons
 tests_count += 1
-assert prefetch.prefetch(EXAMPLES_GOOD[0], False) is True
+# validate file_sha256 is in the returned python dictionary result:
+assert "file_sha256" in prefetch.prefetch(EXAMPLES_GOOD[0], False)
 
 # tests pass, return 0:
 print("-------------------------------------")
