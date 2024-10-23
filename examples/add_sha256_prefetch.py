@@ -9,7 +9,7 @@ import bigfix_prefetch
 
 
 def main():
-    """Only called if prefetch is run directly"""
+    """Only called if this script is run directly"""
     prefetch_to_update = "prefetch unzip.exe sha1:e1652b058195db3f5f754b7ab430652ae04a50b8 size:167936 http://software.bigfix.com/download/redist/unzip-5.52.exe"
 
     print("Updated Prefetch:")
