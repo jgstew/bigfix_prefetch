@@ -28,10 +28,17 @@ def update_fixlet_prefetch(file_path):
         prefetches = re.findall(".*prefetch.*$", file_contents, re.MULTILINE)
         for prefetch in prefetches:
             prefetch = prefetch.strip()
-            print(bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch))
+            # print(bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch))
 
             # update prefetch
-            updated_prefetch = bigfix_prefetch.prefetch.add_sha256_prefetch(prefetch)
+            try:
+                updated_prefetch = bigfix_prefetch.prefetch.add_sha256_prefetch(
+                    prefetch
+                )
+            except BaseException as err:
+                print(f"ERROR with prefetch: {prefetch}")
+                print(err)
+                continue
 
             file_contents = file_contents.replace(prefetch, updated_prefetch)
 
@@ -40,6 +47,9 @@ def update_fixlet_prefetch(file_path):
     # write updated file contents back
     with open(file_path, "w", encoding="utf-8") as file:
         file.writelines(file_contents)
+
+    # consider writing updated fixlets back to root server
+    return file_path
 
 
 def main():
