@@ -51,6 +51,7 @@ def update_fixlet_prefetch(file_path):
     with open(file_path, "w", encoding="utf-8") as file:
         file.writelines(file_contents)
 
+    # validate changed bes file with validate-bex-xml module before upload
     # consider writing updated fixlets back to root server
     return file_path
 
