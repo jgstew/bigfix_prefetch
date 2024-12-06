@@ -6,6 +6,7 @@ This WILL cause the file to be downloaded over the internet in the prefetch, tho
 
 import re
 
+# pylint: disable=import-error
 import besapi
 
 # NOTE: this example requires bigfix_prefetch 1.1.5+
