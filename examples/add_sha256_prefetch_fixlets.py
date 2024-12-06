@@ -19,7 +19,7 @@ def update_fixlet_prefetch(file_path):
     file_contents = ""
 
     # read file contents
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         # Reading from a file
         file_contents = file.read()
         # print(file_contents)
@@ -38,7 +38,7 @@ def update_fixlet_prefetch(file_path):
             # print(file_contents)
 
     # write updated file contents back
-    with open(file_path, "w") as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         file.writelines(file_contents)
 
 

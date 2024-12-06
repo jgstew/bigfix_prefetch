@@ -1,5 +1,5 @@
 [MESSAGES CONTROL]
-disable = C0330, C0326, C0103, consider-using-f-string, duplicate-code, line-too-long
+disable = C0103, consider-using-f-string, duplicate-code, line-too-long
 
 [format]
 max-line-length = 88
