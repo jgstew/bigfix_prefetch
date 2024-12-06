@@ -32,6 +32,7 @@ def update_fixlet_prefetch(file_path):
             # print(bigfix_prefetch.prefetch_parse.parse_prefetch(prefetch))
 
             # update prefetch
+            # pylint: disable=broad-exception-caught
             try:
                 updated_prefetch = bigfix_prefetch.prefetch.add_sha256_prefetch(
                     prefetch
