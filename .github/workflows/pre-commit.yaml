@@ -11,7 +11,7 @@ jobs:
         with:
           # requites to grab the history of the PR
           fetch-depth: 0
-          
+
       - uses: actions/setup-python@v5
 
       - name: pre-commit if pull request
