@@ -1,7 +1,7 @@
 ---
 name: pre-commit
 
-on: pull_request
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   pre-commit:
@@ -11,7 +11,17 @@ jobs:
         with:
           # requites to grab the history of the PR
           fetch-depth: 0
+
       - uses: actions/setup-python@v5
-      - uses: pre-commit/action@v3.0.1
+
+      - name: pre-commit if pull request
+        uses: pre-commit/action@v3.0.1
+        if: github.event_name == 'pull_request'
         with:
           extra_args: --color=always --from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}
+
+      - name: pre-commit if NOT pull request
+        uses: pre-commit/action@v3.0.1
+        if: github.event_name != 'pull_request'
+        with:
+          extra_args: --color=always --all-files
