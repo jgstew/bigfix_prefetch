@@ -13,6 +13,8 @@ jobs:
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
+        with:
+          python-version-file: '.github/workflows/.python-version'
 
       - name: pre-commit if pull request
         uses: pre-commit/action@v3.0.1

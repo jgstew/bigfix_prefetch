@@ -7,6 +7,7 @@ on:
       - master
     paths:
       - "src/bigfix_prefetch/__init__.py"
+      - ".github/workflows/.python-version"
       # - ".github/workflows/tag_and_release.yaml"
 
 jobs:
@@ -17,10 +18,11 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version-file: '.github/workflows/.python-version'
 
       - name: Install requirements
         run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -36,6 +38,7 @@ jobs:
         id: tagged
         shell: bash
         run: git show-ref --tags --verify --quiet -- "refs/tags/v${{ steps.getversion.outputs.version }}" && echo "::set-output name=tagged::0" || echo "::set-output name=tagged::1"
+
       # wait for all other tests to succeed
       #   what if no other tests?
       - name: Wait for tests to succeed
@@ -50,14 +53,17 @@ jobs:
       - name: Install build tools
         if: steps.tagged.outputs.tagged == 1
         run: pip install setuptools wheel build
+
       - name: Run build
         if: steps.tagged.outputs.tagged == 1
         run: python3 -m build
+
       - name: Get Wheel File
         if: steps.tagged.outputs.tagged == 1
         id: getwheelfile
         shell: bash
         run: echo "::set-output name=wheelfile::$(find "dist" -type f -name "*.whl")"
+
       - name: Automatically create github release
         if: steps.tagged.outputs.tagged == 1
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -67,6 +73,7 @@ jobs:
           prerelease: false
           files: |
             ${{ steps.getwheelfile.outputs.wheelfile }}
+
       - name: Publish distribution to PyPI
         if: steps.tagged.outputs.tagged == 1
         uses: pypa/gh-action-pypi-publish@release/v1

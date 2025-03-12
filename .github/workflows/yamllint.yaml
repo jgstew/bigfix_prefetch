@@ -6,10 +6,12 @@ on:
     paths:
       - "**.yaml"
       - "**.yml"
+      - ".github/workflows/.python-version"
   pull_request:
     paths:
       - "**.yaml"
       - "**.yml"
+      - ".github/workflows/.python-version"
 
 jobs:
   yamllint:
@@ -20,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version-file: '.github/workflows/.python-version'
 
       - name: Install yamllint
         run: pip install yamllint

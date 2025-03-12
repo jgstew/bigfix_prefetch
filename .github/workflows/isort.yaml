@@ -8,12 +8,14 @@ on:
       - ".isort.cfg"
       - "requirements.txt"
       - ".github/workflows/isort.yaml"
+      - ".github/workflows/.python-version"
   pull_request:
     paths:
       - "**.py"
       - ".isort.cfg"
       - "requirements.txt"
       - ".github/workflows/isort.yaml"
+      - ".github/workflows/.python-version"
 
 jobs:
   isort:
@@ -21,12 +23,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version-file: '.github/workflows/.python-version'
+
       - name: Install isort
         run: pip install isort
+
       # - name: Install requirements
       #   run: pip install -r requirements.txt
+
       - name: Run isort
         run: isort . --check --diff

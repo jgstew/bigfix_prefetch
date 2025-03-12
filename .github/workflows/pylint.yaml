@@ -8,12 +8,14 @@ on:
       - ".pylintrc"
       - "requirements.txt"
       - ".github/workflows/pylint.yaml"
+      - ".github/workflows/.python-version"
   pull_request:
     paths:
       - "**.py"
       - ".pylintrc"
       - "requirements.txt"
       - ".github/workflows/pylint.yaml"
+      - ".github/workflows/.python-version"
 
 jobs:
   pylint:
@@ -22,12 +24,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version-file: '.github/workflows/.python-version'
+
       - name: Install pylint
         run: pip install pylint
+
       - name: pylint files
         # https://stackoverflow.com/a/63044665/861745
         run: pylint $(git ls-files '*.py')
