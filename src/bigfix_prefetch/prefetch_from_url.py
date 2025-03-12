@@ -16,7 +16,7 @@ from hashlib import md5, sha1, sha256
 try:
     from urllib.request import urlopen  # Python 3
 except ImportError:
-    from urllib2 import urlopen  # Python 2
+    from urllib2 import urlopen  # type: ignore[no-redef] # Python 2
 
 import site
 

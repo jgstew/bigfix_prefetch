@@ -9,12 +9,12 @@ import os
 try:
     from . import prefetch_from_file
 except ImportError:
-    import prefetch_from_file
+    import prefetch_from_file  # type: ignore[no-redef]
 
 try:
     from . import prefetch_from_url
 except ImportError:
-    import prefetch_from_url
+    import prefetch_from_url  # type: ignore[no-redef]
 
 
 def validate_filepath_or_url(filepath_or_url=""):
