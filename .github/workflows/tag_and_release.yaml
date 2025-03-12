@@ -27,6 +27,9 @@ jobs:
       - name: Install requirements
         run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Install setuptools - needed for setup.py
+        run: pip install setuptools
+
       - name: Read VERSION file
         id: getversion
         run: echo "::set-output name=version::$(python ./setup.py --version)"

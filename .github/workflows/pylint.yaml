@@ -31,7 +31,7 @@ jobs:
           python-version-file: '.github/workflows/.python-version'
 
       - name: Install pylint
-        run: pip install pylint
+        run: pip install pylint setuptools
 
       - name: pylint files
         # https://stackoverflow.com/a/63044665/861745
