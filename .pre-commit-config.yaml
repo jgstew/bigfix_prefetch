@@ -45,6 +45,8 @@ repos:
     hooks:
       - id: pylint
         args: [--rcfile=.pylintrc]
+        additional_dependencies:
+          - bigfix_prefetch>=1.1.5
 
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.10.1
