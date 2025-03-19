@@ -55,6 +55,10 @@ def url_to_prefetch(url, bool_return_dictionary=False, file_save_path=None):
 
     # NOTE: handle other cases, ensure default name if none set
     filename = posixpath.basename(url)
+    # handle case where the url has ? then parameters after the filename
+    index = filename.find("?")
+    if index != -1:
+        filename = filename[:index]
     file_save = None
 
     if file_save_path:
