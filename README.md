@@ -12,5 +12,21 @@ This does theoretically support Python2 but is no longer tested and validated fo
 - https://pypi.org/project/bigfix-prefetch/
 
 
+## Prefetch Regex
+
+For either prefetches or prefetch block items:
+
+This assumes prefetch block items can appear in any order, and you already have a line that only contains the prefetch text.
+
+Name of file: ` *(prefetch |add prefetch item .*name=)(\S+) `
+Size: ` *(prefetch |add prefetch item ).*size(=|:)(\d+)( |\b)`
+SHA1: ` *(prefetch |add prefetch item ).*sha1(=|:)(\S+)( |\b)`
+SHA256: ` *(prefetch |add prefetch item ).*sha256(=|:)(\S+)( |\b)`
+URL:
+- Prefetch block: ` *add prefetch item .*url=(\S+)( |\b)`
+- Prefetch:
+
+See also: src/bigfix_prefetch/prefetch_parse.py
+
 ## Related:
 - https://github.com/jgstew/generate_bes_from_template
