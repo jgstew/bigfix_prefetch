@@ -20,8 +20,8 @@ This assumes prefetch block items can appear in any order, and you already have 
 
 Name of file: ` *(prefetch |add prefetch item .*name=)(\S+) `
 Size: ` *(prefetch |add prefetch item ).*size(=|:)(\d+)( |\b)`
-SHA1: ` *(prefetch |add prefetch item ).*sha1(=|:)(\S+)( |\b)`
-SHA256: ` *(prefetch |add prefetch item ).*sha256(=|:)(\S+)( |\b)`
+SHA1: ` *(prefetch |add prefetch item ).*sha1(=|:)(\S{40})( |\b)`
+SHA256: ` *(prefetch |add prefetch item ).*sha256(=|:)(\S{64})( |\b)`
 URL: ` *(prefetch .* (http\S+)|add prefetch item .*url=(\S+))( |\b)`
 - Prefetch block: ` *add prefetch item .*url=(\S+)( |\b)`
 - Prefetch: ` *prefetch .*size:\d+ (\S+)( |\b)`
