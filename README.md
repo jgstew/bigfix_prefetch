@@ -22,9 +22,9 @@ Name of file: ` *(prefetch |add prefetch item .*name=)(\S+) `
 Size: ` *(prefetch |add prefetch item ).*size(=|:)(\d+)( |\b)`
 SHA1: ` *(prefetch |add prefetch item ).*sha1(=|:)(\S+)( |\b)`
 SHA256: ` *(prefetch |add prefetch item ).*sha256(=|:)(\S+)( |\b)`
-URL:
+URL: ` *(prefetch .* (http\S+)|add prefetch item .*url=(\S+))( |\b)`
 - Prefetch block: ` *add prefetch item .*url=(\S+)( |\b)`
-- Prefetch:
+- Prefetch: ` *prefetch .*size:\d+ (\S+)( |\b)`
 
 See also: src/bigfix_prefetch/prefetch_parse.py
 
