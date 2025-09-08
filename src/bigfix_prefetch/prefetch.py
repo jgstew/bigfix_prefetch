@@ -41,7 +41,7 @@ def add_sha256_prefetch(prefetch_to_update, save_file=False):
     )
 
 
-def prefetch(prefetch_data, save_file=True):
+def prefetch(prefetch_data: str | dict, save_file=True):
     """actually prefetch the file and validate the file and prefetch data"""
     parsed_prefetch = {}
     file_path = None
