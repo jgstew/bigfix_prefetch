@@ -14,6 +14,7 @@ This script accepts a prefetch statement, or prefetch block, or a dictionary wit
 
 import os.path
 import site
+import typing
 import warnings
 
 # add the module path
@@ -41,7 +42,7 @@ def add_sha256_prefetch(prefetch_to_update, save_file=False):
     )
 
 
-def prefetch(prefetch_data: str | dict, save_file=True):
+def prefetch(prefetch_data: typing.Union[str, dict], save_file=True):
     """actually prefetch the file and validate the file and prefetch data"""
     parsed_prefetch = {}
     file_path = None
