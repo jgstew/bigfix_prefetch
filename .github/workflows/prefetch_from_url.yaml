@@ -25,5 +25,11 @@ jobs:
       - name: Install bigfix-prefetch
         run: pip install bigfix-prefetch
 
+      - name: setup output
+        run: echo "## Prefetch" >> $GITHUB_STEP_SUMMARY
+
       - name: run bigfix-prefetch
-        run: python -c "import bigfix-prefetch"
+        run: |
+          python -m bigfix_prefetch https://downloads.slack-edge.com/desktop-releases/windows/x64/4.50.121/Slack.msix > output.txt
+          cat output.txt
+          cat output.txt >> $GITHUB_STEP_SUMMARY
