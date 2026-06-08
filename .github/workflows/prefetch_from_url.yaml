@@ -22,7 +22,7 @@ jobs:
   prefetch_from_url:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Set up Python
         uses: actions/setup-python@v5
