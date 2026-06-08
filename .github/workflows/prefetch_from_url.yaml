@@ -30,6 +30,8 @@ jobs:
 
       - name: run bigfix-prefetch
         run: |
-          python -m bigfix_prefetch https://downloads.slack-edge.com/desktop-releases/windows/x64/4.50.121/Slack.msix > output.txt
-          cat output.txt
-          cat output.txt >> $GITHUB_STEP_SUMMARY
+          echo "```" > output.md
+          python -m bigfix_prefetch https://downloads.slack-edge.com/desktop-releases/windows/x64/4.50.121/Slack.msix >> output.md
+          echo "```" > output.md
+          cat output.md
+          cat output.md >> $GITHUB_STEP_SUMMARY
