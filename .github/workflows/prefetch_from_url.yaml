@@ -3,9 +3,19 @@ name: prefetch_from_url
 
 on:
   workflow_dispatch:
+    inputs:
+      url_to_prefetch:
+        description: "URL to turn into a prefetch"
+        default: https://download-installer.cdn.mozilla.net/pub/firefox/releases/151.0.3/mac/en-US/Firefox%20151.0.3.dmg
+        required: true
+        type: string
   push:
     paths:
       - ".github/workflows/prefetch_from_url.yaml"
+
+
+env:
+  url_to_prefetch: https://download-installer.cdn.mozilla.net/pub/firefox/releases/151.0.3/mac/en-US/Firefox%20151.0.3.dmg
 
 
 jobs:
@@ -31,7 +41,7 @@ jobs:
       - name: run bigfix-prefetch
         run: |
           echo "\`" > output.md
-          python -m bigfix_prefetch https://downloads.slack-edge.com/desktop-releases/windows/x64/4.50.121/Slack.msix >> output.md
+          python -m bigfix_prefetch ${{ inputs.url_to_prefetch || env.url_to_prefetch }} >> output.md
           echo "\`" >> output.md
           cat output.md
           cat output.md >> $GITHUB_STEP_SUMMARY
