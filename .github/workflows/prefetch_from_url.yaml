@@ -1,0 +1,29 @@
+---
+name: prefetch_from_url
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/prefetch_from_url.yaml"
+
+
+jobs:
+  prefetch_from_url:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3"
+
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - name: Install bigfix-prefetch
+        run: pip install bigfix-prefetch
+
+      - name: run bigfix-prefetch
+        run: python -c "import bigfix-prefetch"
